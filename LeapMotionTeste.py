@@ -7,8 +7,11 @@ import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
 from sklearn import svm
 
+clf = svm.SVC(kernel = 'linear', C = 1.0)
 
-clf = svm.SVC()
+MAO_ABERTA = 0
+MAO_FECHADA = 1
+
 
 class SampleListener(Leap.Listener):
 	
@@ -24,6 +27,33 @@ class SampleListener(Leap.Listener):
 		# print "Frame available"
 		# frame = controller.frame()
 
+def read_file(arrayX, arrayY, file1,classification):
+	for line in file1:
+		line = line.split(' ')
+		tmp = []
+		for x in line:
+			tmp.append(float(x))
+		arrayX.append(tmp)
+		arrayY.append(classification)
+
+def learning():
+
+
+	# Defining samples and classifications
+
+	ma_file = open('Gestos Gravados/arquivo_mao_aberta','r')
+	mf_file = open('Gestos Gravados/arquivo_mao_fechada','r')	
+
+	X = []
+	Y = []
+
+	read_file(X,Y,mf_file,MAO_FECHADA)
+	read_file(X,Y,ma_file,MAO_ABERTA)
+
+	# print X
+	# print Y
+
+	clf.fit(X,Y)
 
 
 def main():
@@ -36,7 +66,9 @@ def main():
 	controller.add_listener(listener)
 	a = "D"
 
-	# Keep this running until Enter is pressed
+	learning()
+
+
 	while a != "E":
 		try:
 			a = raw_input('Press Enter to get a frame: ')
@@ -57,8 +89,13 @@ def main():
 				middleFingerDirection = fingers[2].direction
 				ringFingerDirection = fingers[3].direction
 				littleFingerDirection = fingers[4].direction
-				print "Frame: %d\npalmPosition: %s\nThumb: %s\nForefinger: %s\nMiddle Finger: %s\nRing Finger: %s\nLittle Finger: %s\npalmDirection: %s\npalmNormal: %s\nthumbDirection: %s\nforefingerDirection: %s\nmiddleFingerDirection: %s\nringFingerDirection: %s\nlittleFingerDirection: %s " % (frame.id, palmPosition, thumb, forefinger, middleFinger, ringFinger, littleFinger, palmDirection, palmNormal, thumbDirection, forefingerDirection, middleFingerDirection, ringFingerDirection, littleFingerDirection)
-			
+				# print "Frame: %d\npalmPosition: %s\nThumb: %s\nForefinger: %s\nMiddle Finger: %s\nRing Finger: %s\nLittle Finger: %s\npalmDirection: %s\npalmNormal: %s\nthumbDirection: %s\nforefingerDirection: %s\nmiddleFingerDirection: %s\nringFingerDirection: %s\nlittleFingerDirection: %s " % (frame.id, palmPosition, thumb, forefinger, middleFinger, ringFinger, littleFinger, palmDirection, palmNormal, thumbDirection, forefingerDirection, middleFingerDirection, ringFingerDirection, littleFingerDirection)
+				sample = [[thumb.x, thumb.y, thumb.z, forefinger.x, forefinger.y, forefinger.z, middleFinger.x, middleFinger.y, middleFinger.z, ringFinger.x, ringFinger.y, ringFinger.z, littleFinger.x, littleFinger.y, littleFinger.z]]
+				a = clf.predict(sample)
+				if a[0] == 0:
+					print 'MAO ABERTA'
+				else:
+					print 'MAO FECHADA'
 		except KeyboardInterrupt:
 			pass
 		finally:
