@@ -11,6 +11,7 @@ clf = svm.SVC(kernel = 'linear', C = 1.0)
 
 MAO_ABERTA = 0
 MAO_FECHADA = 1
+ROCK = 2
 
 
 class SampleListener(Leap.Listener):
@@ -43,12 +44,14 @@ def learning():
 
 	ma_file = open('Gestos Gravados/arquivo_mao_aberta','r')
 	mf_file = open('Gestos Gravados/arquivo_mao_fechada','r')	
+	ro_file = open('Gestos Gravados/arquivo_rock','r')	
 
 	X = []
 	Y = []
 
 	read_file(X,Y,mf_file,MAO_FECHADA)
 	read_file(X,Y,ma_file,MAO_ABERTA)
+	read_file(X,Y,ro_file,ROCK)
 
 	# print X
 	# print Y
@@ -94,8 +97,10 @@ def main():
 				a = clf.predict(sample)
 				if a[0] == 0:
 					print 'MAO ABERTA'
-				else:
+				elif a[0] == 1:
 					print 'MAO FECHADA'
+				else:
+					print 'ROCK'
 		except KeyboardInterrupt:
 			pass
 		finally:
