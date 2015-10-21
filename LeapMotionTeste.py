@@ -6,7 +6,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 import Leap
 from sklearn import svm
 
-clf = svm.SVC(kernel = 'linear', C = 1.0)
+clf_right = svm.SVC(kernel = 'linear', C = 1.0)
+clf_left = svm.SVC(kernel = 'linear', C = 1.0)
+clf_two_hands = svm.SVC(kernel = 'linear', C = 1.0)
 
 OPEN_HAND = 0
 CLOSED_HAND = 1
@@ -56,10 +58,20 @@ class SampleListener(Leap.Listener):
 				littleFingerDirection = fingers[4].direction
 
 				sample = [[thumb.x, thumb.y, thumb.z, forefinger.x, forefinger.y, forefinger.z, middleFinger.x, middleFinger.y, middleFinger.z, ringFinger.x, ringFinger.y, ringFinger.z, littleFinger.x, littleFinger.y, littleFinger.z]]
-				a = clf.predict(sample)
+				
+				a = []
+				if len(frame.hands) == 2:
+					a = clf_two_hands.predict(sample)
+				else:
+					if hands.is_left:
+						a = clf_left.predict(sample)
+					else:
+						a = clf_right.predict(sample)
 				if a[0] != last_gesture:
 					print answers[a[0]]
 					last_gesture = a[0]
+			else:
+				last_gesture = -1
 
 def read_file(file1,classification):
 	for line in file1:
@@ -68,35 +80,41 @@ def read_file(file1,classification):
 		type_of_hand = line[0]
 		for x in line[1:]:
 			tmp.append(float(x))
-		if type_of_hand == 0:
-			X_right.append(tmp)
-			Y_right.append(classification)
-		elif type_of_hand == 1:
-			X_left.append(tmp)
-			Y_left.append(classification)
-		else:
-			X_two_hands.append(tmp)
-			Y_two_hands.append(classification)
+			if type_of_hand == '0':
+
+				X_right.append(tmp)
+				Y_right.append(classification)
+			elif type_of_hand == '1':
+				X_left.append(tmp)
+				Y_left.append(classification)
+			else:
+				X_two_hands.append(tmp)
+				Y_two_hands.append(classification)
 
 def learning():
 
 
 	# Defining samples and classifications
 
-	oh_file = open('Gestos Gravados/arquivo_mao_aberta','r')
-	ch_file = open('Gestos Gravados/arquivo_mao_fechada','r')
-	rs_file = open('Gestos Gravados/arquivo_rock','r')
+	ohr_file = open('Gestos Gravados/arquivo_mao_aberta_direita','r')
+	chr_file = open('Gestos Gravados/arquivo_mao_fechada_direita','r')
+	rsr_file = open('Gestos Gravados/arquivo_rock_direita','r')
+
+	ohl_file = open('Gestos Gravados/arquivo_mao_aberta_esquerda','r')
+	chl_file = open('Gestos Gravados/arquivo_mao_fechada_esquerda','r')
+	rsl_file = open('Gestos Gravados/arquivo_rock_esquerda','r')
 
 
+	read_file(ohr_file,OPEN_HAND)
+	read_file(chr_file,CLOSED_HAND)
+	read_file(rsr_file,ROCK_SYMBOL)
 
-	read_file(oh_file,OPEN_HAND)
-	read_file(ch_file,CLOSED_HAND)
-	read_file(rs_file,ROCK_SYMBOL)
+	read_file(ohl_file,OPEN_HAND)
+	read_file(chl_file,CLOSED_HAND)
+	read_file(rsl_file,ROCK_SYMBOL)
 
-	# print X
-	# print Y
-
-	clf.fit(X_right,Y_right)
+	clf_right.fit(X_right,Y_right)
+	clf_left.fit(X_left,Y_left)
 
 
 def main():
