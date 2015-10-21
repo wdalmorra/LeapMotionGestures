@@ -9,7 +9,7 @@ def get_points(points, f, last):
 		f.write(point)
 
 		if (not last) or (i < len(points) - 1):
-			f.write(', ')
+			f.write(' ')
 
 def main(argv):
 	first = True
@@ -26,10 +26,11 @@ def main(argv):
 		for line in lines:
 			if line.startswith('Frame'):
 				if first:
-					f.write('[')
+					# f.write('[')
 					first = False
 				else:
-					f.write(']\n[')
+					# f.write(']\n[')
+					f.write('\n')
 			elif line.startswith('Thumb'):
 				line = line.split(':')
 				line = line[1].split(' ')
@@ -63,7 +64,8 @@ def main(argv):
 			else:
 				continue
 
-		f.write(']\n')
+		# f.write(']\n')
+		f.write('\n')
 
 		f.close()
 
