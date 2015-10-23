@@ -31,6 +31,10 @@ def main(argv):
 				else:
 					# f.write(']\n[')
 					f.write('\n')
+			elif line.startswith('typeOfHand'):
+				line = line.split(':')
+				line = line[1].split(' ')
+				get_points(line[1:], f, False)
 			elif line.startswith('Thumb'):
 				line = line.split(':')
 				line = line[1].split(' ')

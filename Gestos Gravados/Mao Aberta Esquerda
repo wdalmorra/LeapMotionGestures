@@ -1,0 +1,164 @@
+Initizalized
+Press Enter to get a frame or 'E' to exit: Connected
+
+Frame: 4601
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (72.6494, -8.00034, -23.1533)
+Forefinger: (43.6294, 10.4493, -90.1835)
+Middle Finger: (7.11938, 11.4791, -102.875)
+Ring Finger: (-19.3142, 7.83134, -95.506)
+Little Finger: (-64.2031, 0.135483, -67.9484)
+palmDirection: (0.0916705, 0.373289, -0.923175)
+palmNormal: (0.0277782, -0.927676, -0.37235)
+thumbDirection: (0.42425, 0.126389, -0.896681)
+forefingerDirection: (0.236248, -0.129774, -0.962988)
+middleFingerDirection: (0.050826, -0.165952, -0.984823)
+ringFingerDirection: (-0.00473566, -0.171816, -0.985118)
+littleFingerDirection: (-0.422138, -0.15247, -0.893618) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 5163
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (74.4833, -32.2457, -5.97425)
+Forefinger: (57.5548, -24.6093, -81.123)
+Middle Finger: (25.4413, -11.0764, -99.7516)
+Ring Finger: (-2.4583, 1.99425, -96.4666)
+Little Finger: (-52.4909, 20.1679, -74.2292)
+palmDirection: (0.324712, 0.271412, -0.906034)
+palmNormal: (-0.345069, -0.857916, -0.380666)
+thumbDirection: (0.706585, -0.0228894, -0.707258)
+forefingerDirection: (0.322634, -0.384835, -0.864759)
+middleFingerDirection: (0.1208, -0.347552, -0.929847)
+ringFingerDirection: (0.049448, -0.27432, -0.960366)
+littleFingerDirection: (-0.372904, -0.0437152, -0.926839) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 5516
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (65.5197, 24.4208, -26.0408)
+Forefinger: (34.579, 15.0874, -91.8968)
+Middle Finger: (4.2506, 4.75276, -103.187)
+Ring Finger: (-27.0698, -13.6479, -93.989)
+Little Finger: (-56.7894, -35.4363, -64.702)
+palmDirection: (-0.0991144, 0.32285, -0.941246)
+palmNormal: (0.41273, -0.847364, -0.334109)
+thumbDirection: (0.248206, 0.236306, -0.939443)
+forefingerDirection: (0.26434, -0.175616, -0.948306)
+middleFingerDirection: (0.14659, -0.208972, -0.966872)
+ringFingerDirection: (-0.0241339, -0.279983, -0.959702)
+littleFingerDirection: (-0.296926, -0.424951, -0.855133) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 5819
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (58.2549, -32.3384, -30.4387)
+Forefinger: (41.6238, -9.59734, -88.0817)
+Middle Finger: (11.9461, -11.0717, -99.6512)
+Ring Finger: (-18.9517, -13.7358, -92.4242)
+Little Finger: (-55.2531, -18.1874, -67.5198)
+palmDirection: (0.116118, 0.290346, -0.94985)
+palmNormal: (0.0125528, -0.956672, -0.290897)
+thumbDirection: (0.248818, -0.172987, -0.952977)
+forefingerDirection: (0.193283, -0.390368, -0.900142)
+middleFingerDirection: (0.100469, -0.434308, -0.895144)
+ringFingerDirection: (-0.00432987, -0.440418, -0.897782)
+littleFingerDirection: (-0.261139, -0.462479, -0.847302) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 6089
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (88.3341, 0.982971, -7.47445)
+Forefinger: (59.0533, 10.5414, -88.9191)
+Middle Finger: (8.98597, 11.0383, -108.389)
+Ring Finger: (-41.2375, 12.7512, -95.3888)
+Little Finger: (-78.2894, -0.149521, -58.8411)
+palmDirection: (0.0434984, 0.0484339, -0.997879)
+palmNormal: (0.0117383, -0.99878, -0.0479659)
+thumbDirection: (0.6117, 0.00914346, -0.791037)
+forefingerDirection: (0.459597, 0.0688717, -0.885453)
+middleFingerDirection: (0.0632924, 0.0345619, -0.997396)
+ringFingerDirection: (-0.295259, 0.0632742, -0.95332)
+littleFingerDirection: (-0.661792, -0.0431192, -0.748446) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 6342
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (50.6122, 6.43855, -28.2675)
+Forefinger: (32.1142, 9.78143, -96.1181)
+Middle Finger: (14.2486, 11.8812, -107.501)
+Ring Finger: (-4.60256, 2.96432, -98.571)
+Little Finger: (-27.6443, 2.98199, -75.7974)
+palmDirection: (0.0791966, 0.118985, -0.989733)
+palmNormal: (-0.0504709, -0.991099, -0.123188)
+thumbDirection: (0.108419, 0.0929199, -0.989753)
+forefingerDirection: (0.0885892, 0.0615018, -0.994168)
+middleFingerDirection: (0.111604, 0.0341763, -0.993165)
+ringFingerDirection: (0.146611, -0.0933403, -0.984781)
+littleFingerDirection: (0.127822, -0.0476734, -0.990651) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 6651
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (34.6377, 25.2282, -39.8362)
+Forefinger: (-2.78975, 15.1147, -100.427)
+Middle Finger: (-22.5482, 5.86746, -106.413)
+Ring Finger: (-35.4046, -3.75325, -92.8419)
+Little Finger: (-45.3741, -15.0563, -64.9603)
+palmDirection: (-0.24194, 0.0658026, -0.968057)
+palmNormal: (0.30596, -0.941624, -0.140472)
+thumbDirection: (-0.239743, 0.0396558, -0.970026)
+forefingerDirection: (-0.239445, 0.0393735, -0.970111)
+middleFingerDirection: (-0.205793, -0.0186561, -0.978418)
+ringFingerDirection: (-0.154942, -0.0545242, -0.986418)
+littleFingerDirection: (-0.121084, -0.102011, -0.987387) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 6950
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (48.3205, -27.0802, -25.2832)
+Forefinger: (33.09, -25.3301, -89.3781)
+Middle Finger: (19.4889, -15.211, -103.676)
+Ring Finger: (4.00568, -6.96167, -97.4896)
+Little Finger: (-16.0842, 4.22636, -78.5288)
+palmDirection: (0.272032, 0.104532, -0.956594)
+palmNormal: (-0.35387, -0.91356, -0.200462)
+thumbDirection: (0.267349, -0.0798551, -0.960285)
+forefingerDirection: (0.0633099, -0.284294, -0.956645)
+middleFingerDirection: (0.104724, -0.261418, -0.959528)
+ringFingerDirection: (0.166187, -0.258876, -0.951507)
+littleFingerDirection: (0.196386, -0.210658, -0.95763) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 7254
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (54.8599, -6.07381, -21.6374)
+Forefinger: (37.947, -44.817, -81.9882)
+Middle Finger: (21.5998, -50.527, -93.2909)
+Ring Finger: (3.80783, -43.0992, -89.0793)
+Little Finger: (-20.297, -32.7414, -71.0961)
+palmDirection: (0.180795, -0.353543, -0.91778)
+palmNormal: (-0.11644, -0.934289, 0.336965)
+thumbDirection: (0.192697, -0.36973, -0.908937)
+forefingerDirection: (0.134763, -0.511363, -0.848733)
+middleFingerDirection: (0.163654, -0.553695, -0.81648)
+ringFingerDirection: (0.215561, -0.529438, -0.820505)
+littleFingerDirection: (0.208274, -0.506473, -0.836724) 
+Press Enter to get a frame or 'E' to exit: 
+Frame: 8171
+typeOfHand: 1
+palmPosition: (0, 0, 0)
+Thumb: (89.0477, -14.5892, -16.3365)
+Forefinger: (54.1994, 50.7404, -77.1679)
+Middle Finger: (6.02232, 58.1383, -92.663)
+Ring Finger: (-40.0313, 49.0723, -82.769)
+Little Finger: (-80.0112, 18.0815, -53.2118)
+palmDirection: (0.00510917, 0.38071, -0.924681)
+palmNormal: (0.0404004, -0.924016, -0.380213)
+thumbDirection: (0.682057, 0.100155, -0.724408)
+forefingerDirection: (0.40955, 0.497953, -0.764403)
+middleFingerDirection: (0.0418959, 0.500368, -0.864798)
+ringFingerDirection: (-0.267354, 0.453101, -0.850424)
+littleFingerDirection: (-0.68145, 0.21396, -0.69989) 
+Press Enter to get a frame or 'E' to exit: 
+
