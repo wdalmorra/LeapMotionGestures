@@ -31,6 +31,7 @@ def distance_between_fingers(hand):
 
 	return None
 
+
 def main(argv):
 	hand = Leap.Hand()
 

@@ -32,16 +32,16 @@ def main():
 			if a == '':
 
 				frame = controller.frame()
-				hands = frame.hands[0]
-				fingers = hands.fingers
-				palmPosition = hands.palm_position - hands.palm_position
-				thumb = fingers[0].tip_position - hands.palm_position
-				forefinger = fingers[1].tip_position - hands.palm_position
-				middleFinger = fingers[2].tip_position - hands.palm_position
-				ringFinger = fingers[3].tip_position - hands.palm_position
-				littleFinger = fingers[4].tip_position - hands.palm_position
-				palmDirection = hands.direction
-				palmNormal = hands.palm_normal
+				hand = frame.hands[0]
+				fingers = hand.fingers
+				palmPosition = hand.palm_position - hand.palm_position
+				thumb = fingers[0].tip_position - hand.palm_position
+				forefinger = fingers[1].tip_position - hand.palm_position
+				middleFinger = fingers[2].tip_position - hand.palm_position
+				ringFinger = fingers[3].tip_position - hand.palm_position
+				littleFinger = fingers[4].tip_position - hand.palm_position
+				palmDirection = hand.direction
+				palmNormal = hand.palm_normal
 				thumbDirection = fingers[0].direction
 				forefingerDirection = fingers[1].direction
 				middleFingerDirection = fingers[2].direction
@@ -51,13 +51,12 @@ def main():
 				type_of_hand = -1;
 				if len(frame.hands) == 2:
 					type_of_hand = 2
-				elif len(frame.hands) < 2:
-					if frame.hands[0].is_left:
-						type_of_hand = 1
-					else:
-						type_of_hand = 0
 				else:
-					type_of_hand = -1
+					if len(frame.hands) != 0:
+						if frame.hands[0].is_left:
+							type_of_hand = 1
+						else:
+							type_of_hand = 0
 				
 				print "Frame: %d\ntypeOfHand: %d\npalmPosition: %s\nThumb: %s\nForefinger: %s\nMiddle Finger: %s\nRing Finger: %s\nLittle Finger: %s\npalmDirection: %s\npalmNormal: %s\nthumbDirection: %s\nforefingerDirection: %s\nmiddleFingerDirection: %s\nringFingerDirection: %s\nlittleFingerDirection: %s " % (frame.id, type_of_hand, palmPosition, thumb, forefinger, middleFinger, ringFinger, littleFinger, palmDirection, palmNormal, thumbDirection, forefingerDirection, middleFingerDirection, ringFingerDirection, littleFingerDirection)
 
