@@ -18,12 +18,12 @@ Features*:
 	SVM features:
 		kernel: linear
 		Resultados:
-			44% taxa de acerto
-			29 de 66 gestos reconhecidos corretamente
+			45% taxa de acerto
+			30 de 66 gestos reconhecidos corretamente
 
 		kernel: poly
 		Resultados:
-			28% taxa de acerto
+			27% taxa de acerto
 			18 de 66 gestos reconhecidos corretamente
 
 		kernel: rbf
@@ -42,13 +42,13 @@ Features*:
 	SVM features:
 		kernel: linear
 		Resultados:
-			49% taxa de acerto
+			48% taxa de acerto
 			32 de 66 gestos reconhecidos corretamente
 
 		kernel: poly
 		Resultados:
 			62% taxa de acerto
-			40 de 66 gestos reconhecidos corretamente
+			41 de 66 gestos reconhecidos corretamente
 
 		kernel: rbf
 		Resultados:
