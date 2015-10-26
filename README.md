@@ -10,6 +10,6 @@ Próximos passos:
 Este trabalho faz parte do projeto LIKI, que é um trabalho em parceria entre a UFPel e o IFSul - Campus Pelotas.
 
 Contato:
-	*Thainan Remboski - tbremboski@inf.ufpel.edu.br
-	*William Dalmorra - wddsouza@inf.ufpel.edu.br
-	*Marilton de Aguiar - marilton@inf.ufpel.edu.br
+* Thainan Remboski - tbremboski@inf.ufpel.edu.br
+* William Dalmorra - wddsouza@inf.ufpel.edu.br
+* Marilton de Aguiar - marilton@inf.ufpel.edu.br
