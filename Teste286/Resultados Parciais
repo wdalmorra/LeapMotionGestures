@@ -1,4 +1,4 @@
-Teste
+Teste 1
 
 Algoritmo de classificação: SVM
 
@@ -12,11 +12,52 @@ Lista de Gestos Utilizados:
  - Numerais de 0 a 9 em LIBRAS
 
 Features*:
-	Distância entre cada dedo (tip_position) e o centro da palma da mão (palm_position)
+	Distância entre cada dedo (tip_position) e o centro da palma da mão (palm_position).
 	Distãncia entre os dedos
 
-Resultados:
-	44% taxa de acerto
-	29 de 66 gestos reconhecidos corretamente
+	SVM features:
+		kernel: linear
+		Resultados:
+			44% taxa de acerto
+			29 de 66 gestos reconhecidos corretamente
+
+		kernel: poly
+		Resultados:
+			28% taxa de acerto
+			18 de 66 gestos reconhecidos corretamente
+
+		kernel: rbf
+		Resultados:
+			12% taxa de acerto
+			8 de 66 gestos reconhecidos corretamente
+
+		kernel: sigmoid
+		Resultados:
+			9% taxa de acerto
+			6 de 66 gestos reconhecidos corretamente
+
+Features*:
+	Pontos estáticos das pontas dos dedos transladados para origem onde o centro é a palma da mão.
+
+	SVM features:
+		kernel: linear
+		Resultados:
+			49% taxa de acerto
+			32 de 66 gestos reconhecidos corretamente
+
+		kernel: poly
+		Resultados:
+			62% taxa de acerto
+			40 de 66 gestos reconhecidos corretamente
+
+		kernel: rbf
+		Resultados:
+			18% taxa de acerto
+			12 de 66 gestos reconhecidos corretamente
+
+		kernel: sigmoid
+		Resultados:
+			9% taxa de acerto
+			6 de 66 gestos reconhecidos corretamente
 
 *gestos coletados utilizando o LeapMotion no IFSul
