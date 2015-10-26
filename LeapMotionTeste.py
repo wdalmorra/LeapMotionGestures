@@ -87,15 +87,16 @@ def read_file(file1,classification):
 		type_of_hand = line[0]
 		for x in line[1:]:
 			tmp.append(float(x))
-			if type_of_hand == '0':
-				X_right.append(tmp)
-				Y_right.append(classification)
-			elif type_of_hand == '1':
-				X_left.append(tmp)
-				Y_left.append(classification)
-			else:
-				X_two_hands.append(tmp)
-				Y_two_hands.append(classification)
+		
+		if type_of_hand == '0':
+			X_right.append(tmp)
+			Y_right.append(classification)
+		elif type_of_hand == '1':
+			X_left.append(tmp)
+			Y_left.append(classification)
+		else:
+			X_two_hands.append(tmp)
+			Y_two_hands.append(classification)
 
 def learning():
 

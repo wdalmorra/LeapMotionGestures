@@ -1,0 +1,22 @@
+Teste
+
+Algoritmo de classificação: SVM
+
+Total de amostras: 286 (13 pessoas / 22 gestos cada)
+Training Set: 220 (10 pessoas)
+Testing Set: 66 (3 pessoas)
+
+Lista de Gestos Utilizados:
+ - Mão Aberta
+ - Mão Fechada
+ - Numerais de 0 a 9 em LIBRAS
+
+Features*:
+	Distância entre cada dedo (tip_position) e o centro da palma da mão (palm_position)
+	Distãncia entre os dedos
+
+Resultados:
+	44% taxa de acerto
+	29 de 66 gestos reconhecidos corretamente
+
+*gestos coletados utilizando o LeapMotion no IFSul
