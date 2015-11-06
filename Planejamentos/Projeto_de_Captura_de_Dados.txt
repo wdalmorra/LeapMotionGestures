@@ -1,0 +1,47 @@
+INTERFACE
+- Python
+- Layout
+- Variáveis Paramatrizáveis
+	+ Confidence Mínima
+	+ # Frames / Gestos
+- Informações mostradas na tela
+	+ Confidence Atual (Número e Cor)
+
+
+BACK-END
+- Python
+- Estrutura JSON (PyMONGO)
+- Dados a serem gravados
+	+ Hand:
+		confidence
+		direction
+		grab_strength
+		is_left/right
+		palm_normal
+		palm_position
+		palm_veocity
+		palm_width
+		palm_strength
+		sphere_center
+		sphere_radius
+		stabilized_palm_position
+		Arm:
+			direction
+			elbow_position
+			wrist_position
+		Fingers:
+			type
+			direction
+			length
+			stabilized_palm_position
+			tip_position
+			tip_velocity
+			width
+			Bones:
+				type
+				center
+				direction
+				length
+				width
+				next_joint
+				prev_joint
