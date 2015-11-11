@@ -1,97 +1,122 @@
-import os, sys, inspect, json
+import os, sys, inspect, json, datetime
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 arch_dir = 'LeapSDK/lib/x64' if sys.maxsize > 2**32 else 'LeapSDK/lib/x86'
 sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 
 import Leap
 from Leap import Finger
+import pprint
 
-def get_data(controller, label):
+# class SampleListener(Leap.Listener):
+	
+# 	def on_init(self, controller):
+# 		print "Initizalized"
+# 		connected = False
+
+# 	def on_connect(self, controller):
+# 		print "Connected"
+# 		connected = True
+
+# 	def on_frame(self,controller):
+# 		pass
+
+def get_data(controller, name):
 	frame = controller.frame()
+
+	while not frame.is_valid:
+		frame = controller.frame()
 
 	hands = frame.hands
 
 	d = {}
-	d[label] = {}
+	d['utc'] = str(datetime.datetime.utcnow())
+	d['name'] = name
+
+	print len(hands)
 
 	for hand in hands:
+		print 'hand'
 		if hand.is_valid:
+			print 'valid'
 			if hand.is_right:
 				which_hand = 'right_hand'
 			else:
 				which_hand = 'left_hand'
 
-			d[label][which_hand] = {}
+			d[which_hand] = {}
 
-			d[label][which_hand]['confidence'] = hand.confidence
-			d[label][which_hand]['direction'] = hand.direction
-			d[label][which_hand]['grab_strength'] = hand.grab_strength
-			d[label][which_hand]['palm_normal'] = hand.palm_normal
-			d[label][which_hand]['palm_position'] = hand.palm_position
-			d[label][which_hand]['palm_velocity'] = hand.palm_velocity
-			d[label][which_hand]['palm_width'] = hand.palm_width
-			d[label][which_hand]['palm_strength'] = hand.palm_strength
-			d[label][which_hand]['sphere_center'] = hand.sphere_center
-			d[label][which_hand]['sphere_radius'] = hand.sphere_radius
-			d[label][which_hand]['stabilized_palm_position'] = hand.stabilized_palm_position
+			d[which_hand]['confidence'] = hand.confidence
+			d[which_hand]['direction'] = hand.direction.to_tuple()
+			d[which_hand]['grab_strength'] = hand.grab_strength
+			d[which_hand]['palm_normal'] = hand.palm_normal.to_tuple()
+			d[which_hand]['palm_position'] = hand.palm_position.to_tuple()
+			d[which_hand]['palm_velocity'] = hand.palm_velocity.to_tuple()
+			d[which_hand]['palm_width'] = hand.palm_width
+			d[which_hand]['sphere_center'] = hand.sphere_center.to_tuple()
+			d[which_hand]['sphere_radius'] = hand.sphere_radius
+			d[which_hand]['stabilized_palm_position'] = hand.stabilized_palm_position.to_tuple()
 
 			arm = hand.arm
-			d[label][which_hand]['arm'] = {}
+			d[which_hand]['arm'] = {}
 
-			d[label][which_hand]['arm']['direction'] = arm.direction
-			d[label][which_hand]['arm']['elbow_position'] = arm.elbow_position
-			d[label][which_hand]['arm']['wrist_position'] = arm.wrist_position
+			d[which_hand]['arm']['direction'] = arm.direction.to_tuple()
+			d[which_hand]['arm']['elbow_position'] = arm.elbow_position.to_tuple()
+			d[which_hand]['arm']['wrist_position'] = arm.wrist_position.to_tuple()
 
 			fingers = hand.fingers
 
 			for finger in fingers:
-				if finger.type = Finger.TYPE_THUMB:
+				if finger.type == Finger.TYPE_THUMB:
 					which_finger = 'thumb'
-				elif finger.type = Finger.TYPE_INDEX:
+				elif finger.type == Finger.TYPE_INDEX:
 					which_finger = 'index'
-				elif finger.type = Finger.TYPE_MIDDLE:
+				elif finger.type == Finger.TYPE_MIDDLE:
 					which_finger = 'middle'
-				elif finger.type = Finger.TYPE_RING:
+				elif finger.type == Finger.TYPE_RING:
 					which_finger = 'ring'
-				elif finger.type = Finger.TYPE_PINKY:
+				elif finger.type == Finger.TYPE_PINKY:
 					which_finger = 'pinky'
 				else:
 					break
 
-				d[label][which_hand][which_finger] = {}
+				d[which_hand][which_finger] = {}
 
-				d[label][which_hand][which_finger]['direction'] = finger.direction
-				d[label][which_hand][which_finger]['length'] = finger.length
-				d[label][which_hand][which_finger]['stabilized_tip_position'] = finger.stabilized_tip_position
-				d[label][which_hand][which_finger]['tip_position'] = finger.tip_position
-				d[label][which_hand][which_finger]['tip_velocity'] = finger.tip_velocity
-				d[label][which_hand][which_finger]['width'] = finger.width
+				d[which_hand][which_finger]['direction'] = finger.direction.to_tuple()
+				d[which_hand][which_finger]['length'] = finger.length
+				d[which_hand][which_finger]['stabilized_tip_position'] = finger.stabilized_tip_position.to_tuple()
+				d[which_hand][which_finger]['tip_position'] = finger.tip_position.to_tuple()
+				d[which_hand][which_finger]['tip_velocity'] = finger.tip_velocity.to_tuple()
+				d[which_hand][which_finger]['width'] = finger.width
 
 				for i in range(4):
 					bone = 'bone_' + str(i)
 
-					d[label][which_hand][which_finger][bone] = {}
+					d[which_hand][which_finger][bone] = {}
 
-					d[label][which_hand][which_finger][bone]['center'] = finger.bone(i).center
-					d[label][which_hand][which_finger][bone]['direction'] = finger.bone(i).direction
-					d[label][which_hand][which_finger][bone]['length'] = finger.bone(i).length
-					d[label][which_hand][which_finger][bone]['width'] = finger.bone(i).width
-					d[label][which_hand][which_finger][bone]['next_joint'] = finger.bone(i).next_joint
-					d[label][which_hand][which_finger][bone]['prev_joint'] = finger.bone(i).prev_joint
+					d[which_hand][which_finger][bone]['center'] = finger.bone(i).center.to_tuple()
+					d[which_hand][which_finger][bone]['direction'] = finger.bone(i).direction.to_tuple()
+					d[which_hand][which_finger][bone]['length'] = finger.bone(i).length
+					d[which_hand][which_finger][bone]['width'] = finger.bone(i).width
+					d[which_hand][which_finger][bone]['next_joint'] = finger.bone(i).next_joint.to_tuple()
+					d[which_hand][which_finger][bone]['prev_joint'] = finger.bone(i).prev_joint.to_tuple()
+
+		else:
+			print 'not valid'
 
 	return d
 
 
 
 def main(argv):
-	listener = SampleListener()
+	# listener = SampleListener()
 	controller = Leap.Controller()
+	pp = pprint.PrettyPrinter(indent=4)
 
 	# Have the sample listener receive events from the controller
-	controller.add_listener(listener)
+	# controller.add_listener(listener)
 
-	label = 'Thainan'
-	result = get_data(controller, label)
+	name = 'Thainan'
+	result = get_data(controller, name)
 
 	jsonarray = json.dumps(result)
 
@@ -105,7 +130,9 @@ def main(argv):
 	except Exception, e:
 		print e
 
-	# print result
+	# pp.pprint(result)
+
+	# controller.remove_listener(listener)
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
