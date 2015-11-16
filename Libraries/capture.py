@@ -6,19 +6,11 @@ sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 import Leap
 from Leap import Finger
 import pprint
+from pymongo import MongoClient
 
-# class SampleListener(Leap.Listener):
-	
-# 	def on_init(self, controller):
-# 		print "Initizalized"
-# 		connected = False
-
-# 	def on_connect(self, controller):
-# 		print "Connected"
-# 		connected = True
-
-# 	def on_frame(self,controller):
-# 		pass
+MODE_PRINT = 0
+MODE_FILE = 1
+MODE_MONGO = 2
 
 def get_data(controller, name):
 	frame = controller.frame()
@@ -108,31 +100,42 @@ def get_data(controller, name):
 
 
 def main(argv):
-	# listener = SampleListener()
-	controller = Leap.Controller()
-	pp = pprint.PrettyPrinter(indent=4)
+	mode = MODE_MONGO
 
-	# Have the sample listener receive events from the controller
-	# controller.add_listener(listener)
+	controller = Leap.Controller()
+	if mode == MODE_PRINT:
+		pp = pprint.PrettyPrinter(indent=4)
+
+	if mode == MODE_MONGO:
+		client = MongoClient()
+		db = client.test
+		collection = db.test_col
 
 	name = 'Thainan'
 	result = get_data(controller, name)
 
-	jsonarray = json.dumps(result)
+	if mode == MODE_FILE:
+		jsonarray = json.dumps(result)
 
 	try:
-		f = open('teste.json', 'w')
+		if mode == MODE_MONGO:
+			postid = collection.insert(result)
+			print("Inserted with id " + str(postid))
 
-		f.write(jsonarray)
+		if mode == MODE_FILE:
+			f = open('teste.json', 'w')
 
-		f.close()
+			f.write(jsonarray)
+
+			f.close()
 
 	except Exception, e:
 		print e
 
-	# pp.pprint(result)
+	if mode == MODE_PRINT:
+		pp.pprint(result)
 
-	# controller.remove_listener(listener)
+	
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
