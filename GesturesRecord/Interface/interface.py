@@ -1,12 +1,24 @@
+import sys, os
+src_dir = os.environ['LEAP_HOME']
+lib_dir = 'lib/'
+join_dir = os.path.join(src_dir, lib_dir)
+sys.path.append(join_dir)
+arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
+join_dir = os.path.join(join_dir, arch_dir)
+sys.path.append(join_dir)
+
 from Tkinter import *
 import ttk
-import Tkinter as tk
+import capture
+import Leap
+
 class Example(Frame):
 
 	confidence = None
 	content = None
 	sett = None
 	counter = 0
+	controller = None
 
 	def __init__(self, master):
 		Frame.__init__(self,master)
@@ -15,14 +27,16 @@ class Example(Frame):
 		self.parent.protocol('WM_DELETE_WINDOW', self.close_window)
 		
 		self.init_ui()
+
+		self.controller = Leap.Controller()
 	
 	def center_window(self):
 
-		w = 1280
-		h = 780
-
 		sw = self.parent.winfo_screenwidth()
 		sh = self.parent.winfo_screenheight()
+
+		w = sw / 4;
+		h = sh / 2;
 
 		x = (sw - w)/2
 		y = (sh - h)/2
@@ -77,7 +91,13 @@ class Example(Frame):
 			self.sett.lift()
 
 	def save_gesture(self):
-		pass
+		name = 'Thainan'
+		confidence = 0.6
+		data = capture.get_data(self.controller, name, confidence)
+
+		success = capture.save_on_mongo(data, 'test', 'test1')
+
+		return success
 
 
 class SettingsWindow(Frame):
@@ -144,12 +164,12 @@ class SettingsWindow(Frame):
 		self.father.counter = self.father.counter - 1
 		self.parent.destroy()
 
-def main():
+# def main():
 
-	root = Tk()
-	app = Example(root)
-	root.mainloop()
+# 	root = Tk()
+# 	app = Example(root)
+# 	root.mainloop()
 
 
-if __name__ == '__main__':
-	main()
+# if __name__ == '__main__':
+# 	main()

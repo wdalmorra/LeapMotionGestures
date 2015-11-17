@@ -1,18 +1,22 @@
-import os, sys, inspect, json, datetime
-src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
-arch_dir = 'LeapSDK/lib/x64' if sys.maxsize > 2**32 else 'LeapSDK/lib/x86'
-sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
+import os, sys, json, datetime, getopt, time
+src_dir = os.environ['LEAP_HOME']
+lib_dir = 'lib/'
+join_dir = os.path.join(src_dir, lib_dir)
+sys.path.append(join_dir)
+arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
+join_dir = os.path.join(join_dir, arch_dir)
+sys.path.append(join_dir)
 
 import Leap
 from Leap import Finger
-import pprint
 from pymongo import MongoClient
+# import pprint
 
-MODE_PRINT = 0
-MODE_FILE = 1
-MODE_MONGO = 2
+# MODE_PRINT = 0
+# MODE_FILE = 1
+# MODE_MONGO = 2
 
-def get_data(controller, name):
+def get_data(controller, name, confidence):
 	frame = controller.frame()
 
 	while not frame.is_valid:
@@ -20,16 +24,30 @@ def get_data(controller, name):
 
 	hands = frame.hands
 
+	while len(hands) == 0:
+		frame = controller.frame()
+		hands = frame.hands
+
+	time.sleep(1)
+
+	while True:
+		frame = controller.frame()
+		hands = frame.hands
+		if len(hands) > 0:
+			confidence_now = hands[0].confidence
+
+		if confidence_now >= confidence:
+			break
+
 	d = {}
 	d['utc'] = str(datetime.datetime.utcnow())
 	d['name'] = name
 
-	print len(hands)
+	print 'Confidence: ' + str(confidence_now)
 
 	for hand in hands:
-		print 'hand'
 		if hand.is_valid:
-			print 'valid'
+			print 'Valid hand'
 			if hand.is_right:
 				which_hand = 'right_hand'
 			else:
@@ -93,49 +111,89 @@ def get_data(controller, name):
 					d[which_hand][which_finger][bone]['prev_joint'] = finger.bone(i).prev_joint.to_tuple()
 
 		else:
-			print 'not valid'
+			print 'Not a valid hand'
 
 	return d
 
+def save_on_mongo(data, db_name, col_name):
+	client = MongoClient()
+	db = client[db_name]
+	collection = db[col_name]
 
+	oid = collection.insert(data)
 
-def main(argv):
-	mode = MODE_MONGO
+	if(oid != None):
+		return True
+	else:
+		return False
 
-	controller = Leap.Controller()
-	if mode == MODE_PRINT:
-		pp = pprint.PrettyPrinter(indent=4)
+# def main(argv):
+# 	mode = MODE_MONGO
+# 	db_name = 'test'
+# 	collection_name = 'test_col'
 
-	if mode == MODE_MONGO:
-		client = MongoClient()
-		db = client.test
-		collection = db.test_col
+# 	try:
+# 		opts, args = getopt.getopt(argv,'hpm:f:')
+# 	except getopt.GetoptError:
+# 		print('usage: python2 capture.py <opt> <name>')
+# 		print('<opt>: -h -p -m -f')
+# 		print('<name>: <filename> or <collectionname> in case of <opt> -f or -m')
+# 		print('Type python2 capture.py -h for help')
+# 		sys.exit(2)
+# 	if(opts == []):
+# 		opts.append(('-h', ''))
+# 	for opt, arg in opts:
+# 		if opt == '-h':
+# 			print('usage: python2 capture.py <opt> <name>')
+# 			print('-h, Help')
+# 			print('-p, Print debug information')
+# 			print('-m, Upload info to <collectionname> in MongoDB')
+# 			print('-f, Put JSON information in a file named <filename>')
+# 			sys.exit()
+# 		elif opt in ('-p'):
+# 			mode = MODE_PRINT
+# 		elif opt in ('-m'):
+# 			mode = MODE_MONGO
+# 			collection_name = arg
+# 		elif opt in ('-f'):
+# 			mode = MODE_FILE
+# 			filename = arg
 
-	name = 'Thainan'
-	result = get_data(controller, name)
+# 	controller = Leap.Controller()
+# 	if mode == MODE_PRINT:
+# 		pp = pprint.PrettyPrinter(indent=4)
 
-	if mode == MODE_FILE:
-		jsonarray = json.dumps(result)
+# 	if mode == MODE_MONGO:
+# 		client = MongoClient()
+# 		db = client[db_name]
+# 		collection = db[collection_name]
 
-	try:
-		if mode == MODE_MONGO:
-			postid = collection.insert(result)
-			print("Inserted with id " + str(postid))
+# 	name = 'Thainan'
+# 	confidence = 0.5
+# 	result = get_data(controller, name, confidence)
 
-		if mode == MODE_FILE:
-			f = open('teste.json', 'w')
+# 	if mode == MODE_FILE:
+# 		jsonarray = json.dumps(result)
 
-			f.write(jsonarray)
+# 	try:
+# 		if mode == MODE_MONGO:
+# 			postid = collection.insert(result)
+# 			print("Inserted with id " + str(postid))
 
-			f.close()
+# 		if mode == MODE_FILE:
+# 			f = open(filename, 'w')
 
-	except Exception, e:
-		print e
+# 			f.write(jsonarray)
 
-	if mode == MODE_PRINT:
-		pp.pprint(result)
+# 			f.close()
+
+# 	except Exception, e:
+# 		print e
+
+# 	if mode == MODE_PRINT:
+# 		pp.pprint(result)
 
 	
 
-if __name__ == '__main__':
-	main(sys.argv[1:])
+# if __name__ == '__main__':
+# 	main(sys.argv[1:])
