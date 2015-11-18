@@ -11,7 +11,7 @@ from Tkinter import *
 import ttk
 import Queue
 import save_thread as st
-# import capture
+import capture
 # import Leap
 
 class Example(Frame):
@@ -20,7 +20,7 @@ class Example(Frame):
 	confidence_label = None			# Label updated everytime a frame is captured
 	content = None					# Main frame
 	sett = None						# Settings window - unique
-	controller = None				# Leap Motion controller - unique as well
+	# controller = None				# Leap Motion controller - unique as well
 	name_entry = None				# Entry for a new name, used in the save method
 	
 	counter = 0						# Allows only one settings window at the time
@@ -127,7 +127,7 @@ class Example(Frame):
 		# data = capture.get_data(self.controller, name, self.confidence)
 
 		# success = capture.save_on_mongo(data, self.db_name, self.collection_name)
-		t = st.(1, name, self.confidence, self.db_name, self.collection_name, self.queue)
+		t = st.SaveThread(1, name, self.confidence, self.db_name, self.collection_name, self.queue)
 
 		t.start()
 		self.master.after(100, self.process_queue)
@@ -151,6 +151,7 @@ class Example(Frame):
 	def process_queue(self):
 		try:
 			msg = self.queue.get(0)
+			# self.name_entry.delete(0)
 			# Do something
 		except Queue.Empty:
 			self.master.after(1000, self.process_queue)

@@ -16,7 +16,7 @@ from pymongo import MongoClient
 # MODE_FILE = 1
 # MODE_MONGO = 2
 
-def get_data(controller, name, confidence):
+def save_data(controller, name, confidence, db_name, col_name):
 	frame = controller.frame()
 
 	while not frame.is_valid:
@@ -113,7 +113,7 @@ def get_data(controller, name, confidence):
 		else:
 			print 'Not a valid hand'
 
-	return d
+	return save_on_mongo(d, db_name, col_name)
 
 def save_on_mongo(data, db_name, col_name):
 	client = MongoClient()
