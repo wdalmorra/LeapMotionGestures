@@ -36,7 +36,7 @@ class Example(Frame):
 		sh = self.parent.winfo_screenheight()
 
 		w = sw / 4;
-		h = sh / 2;
+		h = sh / 4;
 
 		x = (sw - w)/2
 		y = (sh - h)/2
@@ -54,11 +54,17 @@ class Example(Frame):
 		save = ttk.Button(self.content, text="Save", command=self.save_gesture)
 		self.confidence = ttk.Label(self.content, text='Confidence = --%')
 
+		name_label = ttk.Label(self.content, text='Name: ')
+
+		name_entry = ttk.Entry(self.content)
+
 		self.content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 		self.confidence.grid(column=1, row=0, sticky=(N, E),pady=15)
 		settings.grid(column=4,row=0, sticky=(N, E), pady=15, padx=15)
 		save.grid(column=1, row=3, sticky=(N, E),pady=25)
+		name_label.grid(column=3, row=3, sticky=(N,E),pady=25, padx=5)
+		name_entry.grid(column=4, row=3, sticky=(N,W),pady=25, padx=15)
 
 		# self.setConfidence(34)
 
