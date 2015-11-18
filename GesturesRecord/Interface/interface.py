@@ -24,7 +24,8 @@ class Example(Frame):
 	n_frames = None					# # of frames/gesture
 	db_name = None					# Database name
 	collection_name = None			# Collection name
-	queue = None
+	queue = None					# Thread result
+	active_thread = None			# Holds the active thread (if exists)
 
 	def __init__(self, master):
 		Frame.__init__(self,master)
@@ -37,11 +38,12 @@ class Example(Frame):
 
 		# self.controller = Leap.Controller()
 
-		self.set_minimum_confidence(0.6)
+		self.set_minimum_confidence(0.75)
 		self.set_n_frames(1)
 		self.set_db_name("test")
 		self.set_collection_name("test1")
 		self.queue = Queue.Queue()
+		self.active_thread = None
 	
 	# Centers and sizes the window according to the size of the screen
 	def center_window(self):
@@ -80,8 +82,8 @@ class Example(Frame):
 
 		self.content.grid(column=0, row=0, sticky=(N, S, E, W))
 
-		self.confidence_label.grid(column=1, row=0, sticky=(N,E),pady=15, padx=15)
-		self.message_label.grid(column=2, row=1, columnspan=2)
+		self.confidence_label.grid(column=1, row=0, sticky=(N,E),pady=15, padx=15, columnspan=2)
+		self.message_label.grid(column=2, row=1, columnspan=3)
 		settings.grid(column=5,row=0, sticky=(N,E), pady=15, padx=15)
 		save.grid(column=1, row=3, sticky=(N, E),pady=25)
 		name_label.grid(column=3, row=3, sticky=(N,E),pady=25, padx=5)
@@ -113,6 +115,8 @@ class Example(Frame):
 
 	# Responsable for closing the window
 	def close_window(self):
+		if(self.active_thread != None and self.active_thread.is_alive()):
+			self.active_thread._stop.set()
 		self.parent.destroy()
 
 	# Creates a new window of just set focus to a window already open
@@ -129,14 +133,12 @@ class Example(Frame):
 	def save_gesture(self):
 		name = self.name_entry.get()
 		# n_frames
-		# data = capture.get_data(self.controller, name, self.confidence)
 
-		# success = capture.save_on_mongo(data, self.db_name, self.collection_name)
 		t = st.SaveThread(1, name, self)
-
 		t.start()
+
+		self.active_thread = t
 		self.master.after(100, self.process_queue)
-		# return success
 
 	## Sequence of methods that save the settings from settings window
 	## BEGIN
@@ -158,7 +160,7 @@ class Example(Frame):
 			msg = self.queue.get(0)
 			if(msg):
 				self.name_entry.delete(0)
-			# Do something
+
 		except Queue.Empty:
 			self.master.after(1000, self.process_queue)
 
@@ -242,8 +244,8 @@ class SettingsWindow(Frame):
 		self.parent.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
 	def save_settings(self):
-		self.father.set_n_frames(self.n_frames_entry.get())
-		self.father.set_minimum_confidence(self.confidence_entry.get())
+		self.father.set_n_frames(float(self.n_frames_entry.get()))
+		self.father.set_minimum_confidence(float(self.confidence_entry.get()))
 		self.father.set_db_name(self.dbname_entry.get())
 		self.father.set_collection_name(self.collection_name_entry.get())
 		self.close_window()
@@ -266,13 +268,3 @@ class SettingsWindow(Frame):
 	
 	def set_default_coll_name(self):
 		self.collection_name_entry.insert(0,self.father.collection_name)
-
-# def main():
-
-# 	root = Tk()
-# 	app = Example(root)
-# 	root.mainloop()
-
-
-# if __name__ == '__main__':
-# 	main()

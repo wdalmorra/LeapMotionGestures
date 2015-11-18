@@ -7,42 +7,44 @@ arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
 join_dir = os.path.join(join_dir, arch_dir)
 sys.path.append(join_dir)
 
-import Leap
 from Leap import Finger
 from pymongo import MongoClient
-import threading
-# from Tkinter import *
-# import pprint
 
-# MODE_PRINT = 0
-# MODE_FILE = 1
-# MODE_MONGO = 2
+def save_data(params):
+	controller = params.controller
+	name = params.name
+	display = params.display
 
-def save_data(controller, name, display):
 	frame = controller.frame()
 
 	while not frame.is_valid:
-		# if(display.parent.winfo_exists() == 0):
-		# 	return False
+		if(params._stop.is_set()):
+			return False
+
 		frame = controller.frame()
 
 	hands = frame.hands
 
 	while len(hands) == 0:
-		print display.parent.winfo_exists()
-		# if(display.parent.winfo_exists() == 0):
-		# 	return False
+		if(params._stop.is_set()):
+			return False
+
 		frame = controller.frame()
 		hands = frame.hands
 
 	time.sleep(1)
 
 	while True:
-		# if(display.parent.winfo_exists() == 0):
-		# 	return False
+		if(params._stop.is_set()):
+			return False
+
 		frame = controller.frame()
 		hands = frame.hands
+
 		if len(hands) > 0:
+			if(params._stop.is_set()):
+				return False
+
 			confidence_now = hands[0].confidence
 
 			display.update_confidence_label(confidence_now)
@@ -137,78 +139,3 @@ def save_on_mongo(data, db_name, col_name):
 		return True
 	else:
 		return False
-
-def to_be_alive():
-	for i in range(10000):
-		pass
-
-# def main(argv):
-# 	mode = MODE_MONGO
-# 	db_name = 'test'
-# 	collection_name = 'test_col'
-
-# 	try:
-# 		opts, args = getopt.getopt(argv,'hpm:f:')
-# 	except getopt.GetoptError:
-# 		print('usage: python2 capture.py <opt> <name>')
-# 		print('<opt>: -h -p -m -f')
-# 		print('<name>: <filename> or <collectionname> in case of <opt> -f or -m')
-# 		print('Type python2 capture.py -h for help')
-# 		sys.exit(2)
-# 	if(opts == []):
-# 		opts.append(('-h', ''))
-# 	for opt, arg in opts:
-# 		if opt == '-h':
-# 			print('usage: python2 capture.py <opt> <name>')
-# 			print('-h, Help')
-# 			print('-p, Print debug information')
-# 			print('-m, Upload info to <collectionname> in MongoDB')
-# 			print('-f, Put JSON information in a file named <filename>')
-# 			sys.exit()
-# 		elif opt in ('-p'):
-# 			mode = MODE_PRINT
-# 		elif opt in ('-m'):
-# 			mode = MODE_MONGO
-# 			collection_name = arg
-# 		elif opt in ('-f'):
-# 			mode = MODE_FILE
-# 			filename = arg
-
-# 	controller = Leap.Controller()
-# 	if mode == MODE_PRINT:
-# 		pp = pprint.PrettyPrinter(indent=4)
-
-# 	if mode == MODE_MONGO:
-# 		client = MongoClient()
-# 		db = client[db_name]
-# 		collection = db[collection_name]
-
-# 	name = 'Thainan'
-# 	confidence = 0.5
-# 	result = get_data(controller, name, confidence)
-
-# 	if mode == MODE_FILE:
-# 		jsonarray = json.dumps(result)
-
-# 	try:
-# 		if mode == MODE_MONGO:
-# 			postid = collection.insert(result)
-# 			print("Inserted with id " + str(postid))
-
-# 		if mode == MODE_FILE:
-# 			f = open(filename, 'w')
-
-# 			f.write(jsonarray)
-
-# 			f.close()
-
-# 	except Exception, e:
-# 		print e
-
-# 	if mode == MODE_PRINT:
-# 		pp.pprint(result)
-
-	
-
-# if __name__ == '__main__':
-# 	main(sys.argv[1:])

@@ -15,14 +15,11 @@ import Leap
 class SaveThread (threading.Thread):
 	def __init__(self, threadID, name, display):
 		threading.Thread.__init__(self)
-		self.threadID = threadID
 		self.controller = Leap.Controller()
+		self._stop = threading.Event()
+		self.threadID = threadID
+		self.name = name
 		self.display = display
 	def run(self):
-		# print "Starting " + self.name
-		# Get lock to synchronize threads
-		# threadLock.acquire()
-		success = capture.save_data(self.controller, self.name, self.display)
+		success = capture.save_data(self)
 		self.display.queue.put(success)
-		# Free lock to release next thread
-		# threadLock.release()
