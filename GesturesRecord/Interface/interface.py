@@ -132,7 +132,7 @@ class Example(Frame):
 		# data = capture.get_data(self.controller, name, self.confidence)
 
 		# success = capture.save_on_mongo(data, self.db_name, self.collection_name)
-		t = st.SaveThread(1, name, self.confidence, self.db_name, self.collection_name, self.queue)
+		t = st.SaveThread(1, name, self)
 
 		t.start()
 		self.master.after(100, self.process_queue)
@@ -156,7 +156,8 @@ class Example(Frame):
 	def process_queue(self):
 		try:
 			msg = self.queue.get(0)
-			# self.name_entry.delete(0)
+			if(msg):
+				self.name_entry.delete(0)
 			# Do something
 		except Queue.Empty:
 			self.master.after(1000, self.process_queue)

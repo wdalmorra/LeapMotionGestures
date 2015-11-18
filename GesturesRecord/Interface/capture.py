@@ -10,34 +10,45 @@ sys.path.append(join_dir)
 import Leap
 from Leap import Finger
 from pymongo import MongoClient
+import threading
+# from Tkinter import *
 # import pprint
 
 # MODE_PRINT = 0
 # MODE_FILE = 1
 # MODE_MONGO = 2
 
-def save_data(controller, name, confidence, db_name, col_name):
+def save_data(controller, name, display):
 	frame = controller.frame()
 
 	while not frame.is_valid:
+		# if(display.parent.winfo_exists() == 0):
+		# 	return False
 		frame = controller.frame()
 
 	hands = frame.hands
 
 	while len(hands) == 0:
+		print display.parent.winfo_exists()
+		# if(display.parent.winfo_exists() == 0):
+		# 	return False
 		frame = controller.frame()
 		hands = frame.hands
 
 	time.sleep(1)
 
 	while True:
+		# if(display.parent.winfo_exists() == 0):
+		# 	return False
 		frame = controller.frame()
 		hands = frame.hands
 		if len(hands) > 0:
 			confidence_now = hands[0].confidence
 
-		if confidence_now >= confidence:
-			break
+			display.update_confidence_label(confidence_now)
+
+			if confidence_now >= display.confidence:
+				break
 
 	d = {}
 	d['utc'] = str(datetime.datetime.utcnow())
@@ -113,7 +124,7 @@ def save_data(controller, name, confidence, db_name, col_name):
 		else:
 			print 'Not a valid hand'
 
-	return save_on_mongo(d, db_name, col_name)
+	return save_on_mongo(d, display.db_name, display.collection_name)
 
 def save_on_mongo(data, db_name, col_name):
 	client = MongoClient()
@@ -126,6 +137,10 @@ def save_on_mongo(data, db_name, col_name):
 		return True
 	else:
 		return False
+
+def to_be_alive():
+	for i in range(10000):
+		pass
 
 # def main(argv):
 # 	mode = MODE_MONGO
