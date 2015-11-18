@@ -1,11 +1,4 @@
 import sys, os
-# src_dir = os.environ['LEAP_HOME']
-# lib_dir = 'lib/'
-# join_dir = os.path.join(src_dir, lib_dir)
-# sys.path.append(join_dir)
-# arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
-# join_dir = os.path.join(join_dir, arch_dir)
-# sys.path.append(join_dir)
 
 from Tkinter import *
 import ttk
@@ -18,6 +11,7 @@ class Example(Frame):
 
 	# things needed to be changed in specific methods, that's why they are attributes
 	confidence_label = None			# Label updated everytime a frame is captured
+	message_label = None			# Label used to show messages about the stage of gesture saving
 	content = None					# Main frame
 	sett = None						# Settings window - unique
 	# controller = None				# Leap Motion controller - unique as well
@@ -75,6 +69,9 @@ class Example(Frame):
 		save = ttk.Button(self.content, text="Save", command=self.save_gesture)
 		self.confidence_label = ttk.Label(self.content, text='Confidence = --%')
 
+		self.message_label = ttk.Label(self.content)
+		self.update_message_label("Press Save to Start!")
+
 		name_label = ttk.Label(self.content, text='Name: ')
 
 		self.name_entry = ttk.Entry(self.content)
@@ -83,20 +80,24 @@ class Example(Frame):
 
 		self.content.grid(column=0, row=0, sticky=(N, S, E, W))
 
-		self.confidence_label.grid(column=1, row=0, sticky=(N, E),pady=15)
-		settings.grid(column=4,row=0, sticky=(N, E), pady=15, padx=15)
+		self.confidence_label.grid(column=1, row=0, sticky=(N,E),pady=15, padx=15)
+		self.message_label.grid(column=2, row=1, columnspan=2)
+		settings.grid(column=5,row=0, sticky=(N,E), pady=15, padx=15)
 		save.grid(column=1, row=3, sticky=(N, E),pady=25)
 		name_label.grid(column=3, row=3, sticky=(N,E),pady=25, padx=5)
-		self.name_entry.grid(column=4, row=3, sticky=(N,W),pady=25, padx=15)
+		self.name_entry.grid(column=4, row=3, columnspan=2, sticky=(N,W),pady=25, padx=15)
 
 		self.parent.columnconfigure(0, weight=1)
 		self.parent.rowconfigure(0, weight=1)
-		self.content.columnconfigure(0, weight=3)
-		self.content.columnconfigure(1, weight=3)
-		self.content.columnconfigure(2, weight=3)
+		self.content.columnconfigure(0, weight=1)
+		self.content.columnconfigure(1, weight=1)
+		self.content.columnconfigure(2, weight=4)
 		self.content.columnconfigure(3, weight=1)
-		self.content.columnconfigure(4, weight=1)
+		self.content.columnconfigure(4, weight=3)
+		self.content.columnconfigure(5, weight=1)
+		self.content.rowconfigure(0, weight=1)
 		self.content.rowconfigure(1, weight=1)
+		self.content.rowconfigure(2, weight=1)
 
 	# Updates the confidence label when a new frame is captured
 	def update_confidence_label(self, conf):
@@ -105,6 +106,10 @@ class Example(Frame):
 		# s =  ttk.Style()
 		# s.configure('My.TFrame', background='blue')
 		# self.content.config(style='My.TFrame')
+
+	# Updates the message label with the correct message
+	def update_message_label(self,mens):
+		self.message_label['text'] = mens
 
 	# Responsable for closing the window
 	def close_window(self):
@@ -261,12 +266,12 @@ class SettingsWindow(Frame):
 	def set_default_coll_name(self):
 		self.collection_name_entry.insert(0,self.father.collection_name)
 
-def main():
+# def main():
 
-	root = Tk()
-	app = Example(root)
-	root.mainloop()
+# 	root = Tk()
+# 	app = Example(root)
+# 	root.mainloop()
 
 
-if __name__ == '__main__':
-	main()
+# if __name__ == '__main__':
+# 	main()
