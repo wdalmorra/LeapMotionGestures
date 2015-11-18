@@ -159,7 +159,9 @@ class Example(Frame):
 		try:
 			msg = self.queue.get(0)
 			if(msg):
-				self.name_entry.delete(0)
+				self.update_message_label('Success!')
+			else:
+				self.update_message_label('Database problem!\nPlease start mongod!')
 
 		except Queue.Empty:
 			self.master.after(1000, self.process_queue)

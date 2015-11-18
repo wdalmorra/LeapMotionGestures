@@ -15,6 +15,8 @@ def save_data(params):
 	name = params.name
 	display = params.display
 
+	display.update_message_label('Perform the gesture!')
+
 	frame = controller.frame()
 
 	while not frame.is_valid:
@@ -129,11 +131,17 @@ def save_data(params):
 	return save_on_mongo(d, display.db_name, display.collection_name)
 
 def save_on_mongo(data, db_name, col_name):
-	client = MongoClient()
-	db = client[db_name]
-	collection = db[col_name]
+	oid = None
 
-	oid = collection.insert(data)
+	try:
+		client = MongoClient()
+		db = client[db_name]
+		collection = db[col_name]
+
+		oid = collection.insert(data)
+
+	except Exception, e:
+		pass
 
 	if(oid != None):
 		return True

@@ -20,6 +20,7 @@ class SaveThread (threading.Thread):
 		self.threadID = threadID
 		self.name = name
 		self.display = display
+		
 	def run(self):
 		success = capture.save_data(self)
 		self.display.queue.put(success)
