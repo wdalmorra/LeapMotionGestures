@@ -9,6 +9,8 @@ import sys, os
 
 from Tkinter import *
 import ttk
+import Queue
+import save_thread as st
 # import capture
 # import Leap
 
@@ -28,6 +30,7 @@ class Example(Frame):
 	n_frames = None					# # of frames/gesture
 	db_name = None					# Database name
 	collection_name = None			# Collection name
+	queue = None
 
 	def __init__(self, master):
 		Frame.__init__(self,master)
@@ -44,6 +47,7 @@ class Example(Frame):
 		self.set_n_frames(1)
 		self.set_db_name("test")
 		self.set_collection_name("test1")
+		self.queue = Queue.Queue()
 	
 	# Centers and sizes the window according to the size of the screen
 	def center_window(self):
@@ -120,11 +124,14 @@ class Example(Frame):
 	def save_gesture(self):
 		name = self.name_entry.get()
 		# n_frames
-		data = capture.get_data(self.controller, name, self.confidence)
+		# data = capture.get_data(self.controller, name, self.confidence)
 
-		success = capture.save_on_mongo(data, self.db_name, self.collection_name)
+		# success = capture.save_on_mongo(data, self.db_name, self.collection_name)
+		t = st.(1, name, self.confidence, self.db_name, self.collection_name, self.queue)
 
-		return success
+		t.start()
+		self.master.after(100, self.process_queue)
+		# return success
 
 	## Sequence of methods that save the settings from settings window
 	## BEGIN
@@ -140,6 +147,13 @@ class Example(Frame):
 	def set_collection_name(self, c_name):
 		self.collection_name = c_name
 	## END
+
+	def process_queue(self):
+		try:
+			msg = self.queue.get(0)
+			# Do something
+		except Queue.Empty:
+			self.master.after(1000, self.process_queue)
 
 
 class SettingsWindow(Frame):
