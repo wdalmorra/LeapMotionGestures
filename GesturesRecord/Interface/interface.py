@@ -101,7 +101,7 @@ class Example(Frame):
 
 	# Updates the confidence label when a new frame is captured
 	def update_confidence_label(self, conf):
-		self.confidence_label['text'] = 'Confidence = '+ str(conf) + '%'
+		self.confidence_label['text'] = 'Confidence = '+ str(int(conf*100)) + '%'
 		## Change the main frame color
 		# s =  ttk.Style()
 		# s.configure('My.TFrame', background='blue')
