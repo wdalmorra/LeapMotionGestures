@@ -1,11 +1,17 @@
 import sys, os
+src_dir = os.environ['LEAP_HOME']
+lib_dir = 'lib/'
+join_dir = os.path.join(src_dir, lib_dir)
+sys.path.append(join_dir)
+arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
+join_dir = os.path.join(join_dir, arch_dir)
+sys.path.append(join_dir)
 
 from Tkinter import *
 import ttk
 import Queue
 import save_thread as st
-import capture
-# import Leap
+import Leap
 
 class Example(Frame):
 
@@ -26,6 +32,8 @@ class Example(Frame):
 	collection_name = None			# Collection name
 	queue = None					# Thread result
 	active_thread = None			# Holds the active thread (if exists)
+	controller = None
+	message_dict = {}
 
 	def __init__(self, master):
 		Frame.__init__(self,master)
@@ -34,9 +42,9 @@ class Example(Frame):
 		self.parent.protocol('WM_DELETE_WINDOW', self.close_window)
 		self.parent.title("Gestures Recorder")
 		
-		self.init_ui()
+		self.init_dict()
 
-		# self.controller = Leap.Controller()
+		self.init_ui()
 
 		self.set_minimum_confidence(0.75)
 		self.set_n_frames(1)
@@ -44,6 +52,7 @@ class Example(Frame):
 		self.set_collection_name("test1")
 		self.queue = Queue.Queue()
 		self.active_thread = None
+		self.controller = Leap.Controller()
 	
 	# Centers and sizes the window according to the size of the screen
 	def center_window(self):
@@ -72,7 +81,7 @@ class Example(Frame):
 		self.confidence_label = ttk.Label(self.content, text='Confidence = --%')
 
 		self.message_label = ttk.Label(self.content)
-		self.update_message_label("Press Save to Start!")
+		self.update_message_label('start')
 
 		name_label = ttk.Label(self.content, text='Name: ')
 
@@ -101,6 +110,14 @@ class Example(Frame):
 		self.content.rowconfigure(1, weight=1)
 		self.content.rowconfigure(2, weight=1)
 
+	def init_dict(self):
+		self.message_dict['start'] = "Press Save to Start!"
+		self.message_dict['gesture'] = "Perform the gesture!"
+		self.message_dict['success'] = "Success!"
+		self.message_dict['fail_db'] = "Database problem!\nPlease start mongod."
+		self.message_dict['no_device'] = "No device detected!\nPlease connect the Leap Motion."
+		self.message_dict['exit'] = "Exiting..."
+
 	# Updates the confidence label when a new frame is captured
 	def update_confidence_label(self, conf):
 		self.confidence_label['text'] = 'Confidence = '+ str(int(conf*100)) + '%'
@@ -111,7 +128,7 @@ class Example(Frame):
 
 	# Updates the message label with the correct message
 	def update_message_label(self,mens):
-		self.message_label['text'] = mens
+		self.message_label['text'] = self.message_dict[mens]
 
 	# Responsable for closing the window
 	def close_window(self):
@@ -134,6 +151,7 @@ class Example(Frame):
 		name = self.name_entry.get()
 		# n_frames
 
+		self.update_message_label('gesture')
 		t = st.SaveThread(1, name, self)
 		t.start()
 
@@ -158,11 +176,8 @@ class Example(Frame):
 	def process_queue(self):
 		try:
 			msg = self.queue.get(0)
-			if(msg):
-				self.update_message_label('Success!')
-			else:
-				self.update_message_label('Database problem!\nPlease start mongod!')
-
+			self.update_message_label(msg)
+			
 		except Queue.Empty:
 			self.master.after(1000, self.process_queue)
 

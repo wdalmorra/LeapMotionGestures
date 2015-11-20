@@ -8,20 +8,22 @@ join_dir = os.path.join(join_dir, arch_dir)
 sys.path.append(join_dir)
 
 from Leap import Finger
-from pymongo import MongoClient
+import mongodb as mongo
 
 def save_data(params):
-	controller = params.controller
 	name = params.name
 	display = params.display
+	controller = display.controller
 
-	display.update_message_label('Perform the gesture!')
+	devices = controller.devices
+	if len(devices) == 0:
+		return 'no_device'
 
 	frame = controller.frame()
 
 	while not frame.is_valid:
 		if(params._stop.is_set()):
-			return False
+			return 'exit'
 
 		frame = controller.frame()
 
@@ -29,7 +31,7 @@ def save_data(params):
 
 	while len(hands) == 0:
 		if(params._stop.is_set()):
-			return False
+			return 'exit'
 
 		frame = controller.frame()
 		hands = frame.hands
@@ -38,14 +40,14 @@ def save_data(params):
 
 	while True:
 		if(params._stop.is_set()):
-			return False
+			return 'exit'
 
 		frame = controller.frame()
 		hands = frame.hands
 
 		if len(hands) > 0:
 			if(params._stop.is_set()):
-				return False
+				return 'exit'
 
 			confidence_now = hands[0].confidence
 
@@ -128,22 +130,4 @@ def save_data(params):
 		else:
 			print 'Not a valid hand'
 
-	return save_on_mongo(d, display.db_name, display.collection_name)
-
-def save_on_mongo(data, db_name, col_name):
-	oid = None
-
-	try:
-		client = MongoClient()
-		db = client[db_name]
-		collection = db[col_name]
-
-		oid = collection.insert(data)
-
-	except Exception, e:
-		pass
-
-	if(oid != None):
-		return True
-	else:
-		return False
+	return mongo.save(d, display.db_name, display.collection_name)
