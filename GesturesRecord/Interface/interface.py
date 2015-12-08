@@ -20,21 +20,22 @@ class Example(Frame):
 	message_label = None			# Label used to show messages about the stage of gesture saving
 	content = None					# Main frame
 	sett = None						# Settings window - unique
-	# controller = None				# Leap Motion controller - unique as well
 	name_entry = None				# Entry for a new name, used in the save method
-	gesture_entry = None			# Entry for a new name, used in the save method
-	
+	gesture_entry = None			# Entry for a new gesture, used in the save method
+
 	counter = 0						# Allows only one settings window at the time
 	
+	queue = None					# Thread result
+	active_thread = None			# Holds the active thread (if exists)
+	controller = None				# Leap Motion controller - unique as well
+	message_dict = {}				# Array of possible messages to be shown
+
 	# Attributes updated by settings window
 	confidence = None				# Minimum confidence
 	n_frames = None					# # of frames/gesture
 	db_name = None					# Database name
 	collection_name = None			# Collection name
-	queue = None					# Thread result
-	active_thread = None			# Holds the active thread (if exists)
-	controller = None
-	message_dict = {}
+
 
 	def __init__(self, master):
 		Frame.__init__(self,master)
@@ -116,7 +117,6 @@ class Example(Frame):
 		self.content.rowconfigure(2, weight=1)
 		self.content.rowconfigure(3, weight=1)
 		self.content.rowconfigure(4, weight=1)
-		self.content.rowconfigure(5, weight=1)
 
 	def init_dict(self):
 		self.message_dict['start'] = "Press Save to Start!"
@@ -144,7 +144,7 @@ class Example(Frame):
 			self.active_thread._stop.set()
 		self.parent.destroy()
 
-	# Creates a new window of just set focus to a window already open
+	# Creates a new window or just sets focus to a window already open
 	def open_settings(self):
 		if self.counter == 0:
 			self.sett = Tk()
@@ -154,13 +154,14 @@ class Example(Frame):
 			self.sett.focus_force()
 			self.sett.lift()
 
-	# Saves the gesture capture in the database
+	# Saves the captured gesture in the database
 	def save_gesture(self):
 		name = self.name_entry.get()
+		gesture = self.gesture_entry.get()
 		# n_frames
 
 		self.update_message_label('gesture')
-		t = st.SaveThread(1, name, self)
+		t = st.SaveThread(1, name, gesture, self)
 		t.start()
 
 		self.active_thread = t
