@@ -22,6 +22,7 @@ class Example(Frame):
 	sett = None						# Settings window - unique
 	# controller = None				# Leap Motion controller - unique as well
 	name_entry = None				# Entry for a new name, used in the save method
+	gesture_entry = None			# Entry for a new name, used in the save method
 	
 	counter = 0						# Allows only one settings window at the time
 	
@@ -83,20 +84,25 @@ class Example(Frame):
 		self.message_label = ttk.Label(self.content)
 		self.update_message_label('start')
 
-		name_label = ttk.Label(self.content, text='Name: ')
+		name_label = ttk.Label(self.content, text='Subject Name: ')
+		gesture_label = ttk.Label(self.content, text='Gesture Name: ')
 
 		self.name_entry = ttk.Entry(self.content)
+		self.gesture_entry = ttk.Entry(self.content)
 
 		self.name_entry.insert(0,"Dumb")
+		self.gesture_entry.insert(0,"Testing Gesture")
 
 		self.content.grid(column=0, row=0, sticky=(N, S, E, W))
 
 		self.confidence_label.grid(column=1, row=0, sticky=(N,E),pady=15, padx=15, columnspan=2)
 		self.message_label.grid(column=2, row=1, columnspan=3)
 		settings.grid(column=5,row=0, sticky=(N,E), pady=15, padx=15)
-		save.grid(column=1, row=3, sticky=(N, E),pady=25)
-		name_label.grid(column=3, row=3, sticky=(N,E),pady=25, padx=5)
-		self.name_entry.grid(column=4, row=3, columnspan=2, sticky=(N,W),pady=25, padx=15)
+		save.grid(column=1, row=4, sticky=(N, E))
+		name_label.grid(column=3, row=3, sticky=(N,E), padx=5)
+		gesture_label.grid(column=3, row=4, sticky=(N,E), padx=5)
+		self.name_entry.grid(column=4, row=3, columnspan=2, sticky=(N,W), padx=15)
+		self.gesture_entry.grid(column=4, row=4, columnspan=2, sticky=(N,W), padx=15)
 
 		self.parent.columnconfigure(0, weight=1)
 		self.parent.rowconfigure(0, weight=1)
@@ -106,9 +112,11 @@ class Example(Frame):
 		self.content.columnconfigure(3, weight=1)
 		self.content.columnconfigure(4, weight=3)
 		self.content.columnconfigure(5, weight=1)
-		self.content.rowconfigure(0, weight=1)
-		self.content.rowconfigure(1, weight=1)
+		self.content.rowconfigure(1, weight=5)
 		self.content.rowconfigure(2, weight=1)
+		self.content.rowconfigure(3, weight=1)
+		self.content.rowconfigure(4, weight=1)
+		self.content.rowconfigure(5, weight=1)
 
 	def init_dict(self):
 		self.message_dict['start'] = "Press Save to Start!"
