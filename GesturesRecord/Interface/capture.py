@@ -1,4 +1,4 @@
-import os, sys, json, datetime, getopt, time
+import os, sys, datetime, time
 src_dir = os.environ['LEAP_HOME']
 lib_dir = 'lib/'
 join_dir = os.path.join(src_dir, lib_dir)
@@ -12,6 +12,7 @@ import mongodb as mongo
 
 def save_data(params):
 	name = params.name
+	gesture = params.gesture
 	display = params.display
 	controller = display.controller
 
@@ -59,6 +60,7 @@ def save_data(params):
 	d = {}
 	d['utc'] = str(datetime.datetime.utcnow())
 	d['name'] = name
+	d['gesture'] = gesture
 
 	print 'Confidence: ' + str(confidence_now)
 
