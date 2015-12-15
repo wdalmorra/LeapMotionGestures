@@ -14,6 +14,6 @@ def save(data, db_name, col_name):
 		pass
 
 	if(oid != None):
-		return 'success'
+		return 'success ' + str(oid)
 	else:
 		return 'fail_db'

@@ -55,6 +55,7 @@ class Example(Frame):
 		self.queue = Queue.Queue()
 		self.active_thread = None
 		self.controller = Leap.Controller()
+		self.controller.set_policy(Leap.Controller.POLICY_IMAGES)
 	
 	# Centers and sizes the window according to the size of the screen
 	def center_window(self):

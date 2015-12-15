@@ -7,8 +7,11 @@ arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
 join_dir = os.path.join(join_dir, arch_dir)
 sys.path.append(join_dir)
 
+import Leap
 from Leap import Finger
 import mongodb as mongo
+import Image
+from skimage import io, filters, util
 
 def save_data(params):
 	name = params.name
@@ -29,6 +32,7 @@ def save_data(params):
 		frame = controller.frame()
 
 	hands = frame.hands
+	controller.set_policy(Leap.Controller.POLICY_IMAGES)
 
 	while len(hands) == 0:
 		if(params._stop.is_set()):
@@ -56,6 +60,8 @@ def save_data(params):
 
 			if confidence_now >= display.confidence:
 				break
+
+	image = frame.images[0]
 
 	d = {}
 	d['utc'] = str(datetime.datetime.utcnow())
@@ -132,4 +138,36 @@ def save_data(params):
 		else:
 			print 'Not a valid hand'
 
-	return mongo.save(d, display.db_name, display.collection_name)
+	ret = mongo.save(d, display.db_name, display.collection_name)
+
+	if(ret.startswith('success')):
+		[ret, oid] = ret.split(' ')
+
+	if image.is_valid:
+		print 'valid image'
+
+		directory = os.path.join(os.getcwd(), 'images/')
+		extension = '.png'
+		tmp_file = 'tmp' + extension
+
+		data = image.data
+
+		barray = bytearray(image.width * image.height)
+		for d in range(0, image.width * image.height - 1):
+			barray[d] = data[d]
+
+		img = Image.frombytes('L', (image.width, image.height), buffer(barray))
+		img.save(directory + tmp_file)
+
+		img = io.imread(directory + tmp_file)
+
+		thresh = filters.threshold_isodata(img)
+		bw_img = img > thresh
+
+		io.imsave(directory + oid + extension, util.img_as_ubyte(bw_img))
+
+		os.remove(directory + tmp_file)
+	else:
+		print 'invalid image'
+
+	return ret

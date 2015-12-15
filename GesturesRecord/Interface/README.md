@@ -22,3 +22,10 @@ sudo apt-get install -y mongodb-org
 3. Por ultimo, instalar o PyMongo (tambem eh possivel instalar pelo pip):
 
 sudo apt-get install python-pymongo
+
+
+OBS2: Tambem deve-se instalar a biblioteca skimage, do scikit:
+
+1. Pelo pip, rode o comando:
+
+pip install -U scikit-image
