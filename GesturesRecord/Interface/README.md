@@ -26,6 +26,20 @@ sudo apt-get install python-pymongo
 
 OBS2: Tambem deve-se instalar a biblioteca skimage, do scikit:
 
-1. Pelo pip, rode o comando:
+1. Instale as dependencias:
 
-pip install -U scikit-image
+sudo apt-get install python-matplotlib python-numpy python-pil python-scipy
+
+sudo apt-get install build-essential cython
+
+2. Pelo pip, rode o comando:
+
+sudo pip install -U scikit-image
+
+3. Caso o comando acima de erro, apontando falha no pacote freetype:
+
+sudo apt-get install libfreetype6-dev
+
+4. Rode o comando, pelo Pip, novamente:
+
+sudo pip install -U scikit-image
