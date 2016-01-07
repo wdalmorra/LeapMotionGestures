@@ -72,7 +72,6 @@ class Example(Frame):
 		self.last_oid = None
 		self.last_db_name = None
 		self.last_col_name = None
-		self.last_gesture = None
 		# self.cb_var = None
 	
 	# Centers and sizes the window according to the size of the screen
@@ -194,7 +193,6 @@ class Example(Frame):
 	def save_gesture(self):
 		name = self.name_entry.get()
 		gesture = self.gesture_entry.get()
-		self.last_gesture = gesture
 		# n_frames
 
 		self.update_message_label('gesture')
@@ -236,9 +234,8 @@ class Example(Frame):
 
 	def undo(self):
 		oid = self.last_oid
-		db_name = self.db_name
+		db_name = self.last_db_name
 		col_name = self.last_col_name
-		gesture = self.last_gesture
 
 		ret = capture.undo_data(oid, db_name, col_name)
 
