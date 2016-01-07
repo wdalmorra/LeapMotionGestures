@@ -170,4 +170,15 @@ def save_data(params):
 	else:
 		print 'invalid image'
 
+	return ret + ' ' + oid + ' ' + display.db_name + ' ' + display.collection_name
+
+def undo_data(oid, db_name, col_name):
+	ret = mongo.remove(oid, db_name, col_name)
+
+	if(ret.endswith('success')):
+		directory = os.path.join(os.getcwd(), 'images/')
+		extension = '.png'
+
+		os.remove(directory + oid + extension)
+
 	return ret
