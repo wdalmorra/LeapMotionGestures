@@ -8,6 +8,7 @@ join_dir = os.path.join(join_dir, arch_dir)
 sys.path.append(join_dir)
 
 from Tkinter import *
+# import tk
 import ttk
 import Queue
 import save_thread as st
@@ -25,26 +26,22 @@ class Example(Frame):
 	gesture_entry = None			# Entry for a new gesture, used in the save method
 
 	counter = 0						# Allows only one settings window at the time
-	
+
 	queue = None					# Thread result
 	active_thread = None			# Holds the active thread (if exists)
 	controller = None				# Leap Motion controller - unique as well
 	message_dict = {}				# Array of possible messages to be shown
-	gesture_queue = []				# Queue for gestures
-	gqi = 0							# Index of the gesture queue
 
 	# Attributes updated by settings window
 	confidence = None				# Minimum confidence
 	n_frames = None					# # of frames/gesture
 	db_name = None					# Database name
 	collection_name = None			# Collection name
-	# cb_var = None
 
 	# Attributes to UNDO
 	last_oid = None
 	last_db_name = None
 	last_col_name = None
-	last_gesture = None
 
 
 	def __init__(self, master):
@@ -54,7 +51,6 @@ class Example(Frame):
 		self.parent.protocol('WM_DELETE_WINDOW', self.close_window)
 		self.parent.title("Gesture Recorder")
 		
-		self.init_gesture_queue()
 
 		self.init_dict()
 
@@ -72,7 +68,6 @@ class Example(Frame):
 		self.last_oid = None
 		self.last_db_name = None
 		self.last_col_name = None
-		# self.cb_var = None
 	
 	# Centers and sizes the window according to the size of the screen
 	def center_window(self):
@@ -111,17 +106,17 @@ class Example(Frame):
 		self.gesture_entry = ttk.Entry(self.content)
 
 		self.name_entry.insert(0,"Dumb")
-		# self.gesture_entry.insert(0,"Testing Gesture")
-		self.gesture_entry.insert(0, self.gesture_queue[self.gqi])
+		self.gesture_entry.insert(0,"Testing Gesture")
+
 
 
 		self.content.grid(column=0, row=0, sticky=(N, S, E, W))
 
-		self.confidence_label.grid(column=1, row=0, sticky=W, pady=15, columnspan=3)
+		self.confidence_label.grid(column=1, row=0, sticky=W, padx=15, pady=15, columnspan=3)
 		self.message_label.grid(column=2, row=1, columnspan=3)
 		settings.grid(column=5,row=0, sticky=(N,E), pady=15, padx=15)
-		self.undo_b.grid(column=1, row=3, sticky=E)
-		save.grid(column=1, row=4, sticky=E)
+		self.undo_b.grid(column=1, row=3, sticky=E, padx=15)
+		save.grid(column=1, row=4, sticky=E, padx=15)
 		name_label.grid(column=3, row=3, sticky=E, padx=5)
 		gesture_label.grid(column=3, row=4, sticky=E, padx=5)
 		self.name_entry.grid(column=4, row=3, columnspan=2, sticky=W, padx=15)
@@ -150,16 +145,6 @@ class Example(Frame):
 		self.message_dict['undo_fail'] = "Undo fail!\nPlease check the database."
 		self.message_dict['exit'] = "Exiting..."
 
-	def init_gesture_queue(self):
-		self.gesture_queue = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-		self.gqi = 0
-
-	def update_gesture_queue_index(self, inc):
-		self.gqi += inc
-
-	def update_gestury_entry(self, value):
-		self.gesture_entry.delete(0, END)
-		self.gesture_entry.insert(0, self.gesture_queue[value])
 
 	# Updates the confidence label when a new frame is captured
 	def update_confidence_label(self, conf):
@@ -224,9 +209,6 @@ class Example(Frame):
 				[msg, self.last_oid, self.last_db_name, self.last_col_name] = msg.split(' ')
 				self.undo_b['state'] = 'normal'
 
-				self.update_gesture_queue_index(1)
-				self.update_gestury_entry(self.gqi)
-
 			self.update_message_label(msg)
 			
 		except Queue.Empty:
@@ -239,10 +221,6 @@ class Example(Frame):
 
 		ret = capture.undo_data(oid, db_name, col_name)
 
-		if(ret.endswith('success')):
-			self.update_gesture_queue_index(-1)
-			self.update_gestury_entry(self.gqi)
-			
 		self.update_message_label(ret)
 
 		self.undo_b['state'] = 'disabled'
@@ -254,7 +232,6 @@ class SettingsWindow(Frame):
 	n_frames_entry = None
 	collection_name_entry = None
 	dbname_entry = None
-
 	def __init__(self, master,father):
 		Frame.__init__(self,master)
 		self.parent = master
@@ -280,12 +257,8 @@ class SettingsWindow(Frame):
 		n_frames_label = ttk.Label(self.content, text='# of Frames/Gesture: ')
 		self.n_frames_entry = ttk.Entry(self.content)
 
-		# cb_var = IntVar()
-		# cb_var.set(1)
-		# self.gesture_queue_cb = ttk.Checkbutton(self.content, text='Gesture Queue', variable=cb_var, onvalue = 1, offvalue = 0)
-		# cb_var.set(1)
-
 		save_button = ttk.Button(self.content, text="Save", command=self.save_settings)
+
 		cancel_button = ttk.Button(self.content, text="Cancel", command=self.cancel)
 
 		self.content.grid(column=0, row=0, sticky=(N, S, E, W))
@@ -297,7 +270,6 @@ class SettingsWindow(Frame):
 		self.dbname_entry.grid(column=3, row=0, pady=10,padx=15)
 		collection_name_label.grid(column=2, row=1, pady=10,padx=15)
 		self.collection_name_entry.grid(column=3, row=1, pady=10,padx=15)
-		# self.gesture_queue_cb.grid(column=0, row=2, pady=10, padx=15)
 		save_button.grid(column=1, row=2, pady=10, padx=15)
 		cancel_button.grid(column=2, row=2, pady=10, padx=15)
 
@@ -337,7 +309,7 @@ class SettingsWindow(Frame):
 		self.father.set_minimum_confidence(float(self.confidence_entry.get()))
 		self.father.set_db_name(self.dbname_entry.get())
 		self.father.set_collection_name(self.collection_name_entry.get())
-		# self.father.cb_var = self.cb_var.get()
+		self.father.cb_var = self.cb_var.get()
 		self.close_window()
 
 	def cancel(self):
