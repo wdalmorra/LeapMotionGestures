@@ -41,25 +41,25 @@ def save_data(params):
 		frame = controller.frame()
 		hands = frame.hands
 
-	time.sleep(1)
+	# time.sleep(1)
 
-	while True:
-		if(params._stop.is_set()):
-			return 'exit'
+	# while True:
+	# 	if(params._stop.is_set()):
+	# 		return 'exit'
 
-		frame = controller.frame()
-		hands = frame.hands
+	# 	frame = controller.frame()
+	# 	hands = frame.hands
 
-		if len(hands) > 0:
-			if(params._stop.is_set()):
-				return 'exit'
+	# 	if len(hands) > 0:
+	# 		if(params._stop.is_set()):
+	# 			return 'exit'
 
-			confidence_now = hands[0].confidence
+	# 		confidence_now = hands[0].confidence
 
-			display.update_confidence_label(confidence_now)
+	# 		display.update_confidence_label(confidence_now)
 
-			if confidence_now >= display.confidence:
-				break
+	# 		if confidence_now >= display.confidence:
+	# 			break
 
 	image = frame.images[0]
 
@@ -68,7 +68,7 @@ def save_data(params):
 	d['name'] = name
 	d['gesture'] = gesture
 
-	print 'Confidence: ' + str(confidence_now)
+	# print 'Confidence: ' + str(confidence_now)
 
 	for hand in hands:
 		if hand.is_valid:
@@ -143,34 +143,37 @@ def save_data(params):
 	if(ret.startswith('success')):
 		[ret, oid] = ret.split(' ')
 
-	if image.is_valid:
-		print 'valid image'
+		if image.is_valid:
+			print 'valid image'
 
-		directory = os.path.join(os.getcwd(), 'images/')
-		extension = '.png'
-		tmp_file = 'tmp' + extension
+			directory = os.path.join(os.getcwd(), 'images/')
+			extension = '.png'
+			tmp_file = 'tmp' + extension
 
-		data = image.data
+			data = image.data
 
-		barray = bytearray(image.width * image.height)
-		for d in range(0, image.width * image.height - 1):
-			barray[d] = data[d]
+			barray = bytearray(image.width * image.height)
+			for d in range(0, image.width * image.height - 1):
+				barray[d] = data[d]
 
-		img = Image.frombytes('L', (image.width, image.height), buffer(barray))
-		img.save(directory + tmp_file)
+			img = Image.frombytes('L', (image.width, image.height), buffer(barray))
+			img.save(directory + tmp_file)
 
-		img = io.imread(directory + tmp_file)
+			img = io.imread(directory + tmp_file)
 
-		thresh = filters.threshold_isodata(img)
-		bw_img = img > thresh
+			thresh = filters.threshold_isodata(img)
+			bw_img = img > thresh
 
-		io.imsave(directory + oid + extension, util.img_as_ubyte(bw_img))
+			io.imsave(directory + oid + extension, util.img_as_ubyte(bw_img))
 
-		os.remove(directory + tmp_file)
+			os.remove(directory + tmp_file)
+		else:
+			print 'invalid image'
+
+		return ret + ' ' + oid + ' ' + display.db_name + ' ' + display.collection_name
+
 	else:
-		print 'invalid image'
-
-	return ret + ' ' + oid + ' ' + display.db_name + ' ' + display.collection_name
+		return ret
 
 def undo_data(oid, db_name, col_name):
 	ret = mongo.remove(oid, db_name, col_name)

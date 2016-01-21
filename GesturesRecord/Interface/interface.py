@@ -246,6 +246,7 @@ class SettingsWindow(Frame):
 
 		confidence_label = ttk.Label(self.content, text='Minimum Confidence: ')
 		self.confidence_entry = ttk.Entry(self.content)
+		self.confidence_entry.configure(state='disabled')
 
 		dbname_label = ttk.Label(self.content, text='Database Name: ')
 		self.dbname_entry = ttk.Entry(self.content)
@@ -256,6 +257,7 @@ class SettingsWindow(Frame):
 
 		n_frames_label = ttk.Label(self.content, text='# of Frames/Gesture: ')
 		self.n_frames_entry = ttk.Entry(self.content)
+		self.n_frames_entry.configure(state='disabled')
 
 		save_button = ttk.Button(self.content, text="Save", command=self.save_settings)
 
@@ -305,11 +307,10 @@ class SettingsWindow(Frame):
 		self.parent.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
 	def save_settings(self):
-		self.father.set_n_frames(float(self.n_frames_entry.get()))
-		self.father.set_minimum_confidence(float(self.confidence_entry.get()))
+		# self.father.set_n_frames(float(self.n_frames_entry.get()))
+		# self.father.set_minimum_confidence(float(self.confidence_entry.get()))
 		self.father.set_db_name(self.dbname_entry.get())
 		self.father.set_collection_name(self.collection_name_entry.get())
-		self.father.cb_var = self.cb_var.get()
 		self.close_window()
 
 	def cancel(self):
