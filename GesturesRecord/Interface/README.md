@@ -43,3 +43,8 @@ sudo apt-get install libfreetype6-dev
 4. Rode o comando, pelo Pip, novamente:
 
 sudo pip install -U scikit-image
+
+5. Caso houver problemas durante a instalação do scikit-kit referentes ao pacote Pillow, recomenda-se instalar as dependências do pacote Pillow:
+
+sudo apt-get build-dep python-imaging
+sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev
