@@ -2,7 +2,7 @@ import sys
 
 def main(argv):
 
-	columns = "_id.$oid,right_hand.grab_strength,right_hand.index.direction.x,\
+	columns = "_id.$oid,right_hand.index.direction.x,\
 right_hand.index.direction.y,right_hand.index.direction.z,right_hand.index.bone_1.direction.x,\
 right_hand.index.bone_1.direction.y,right_hand.index.bone_1.direction.z,right_hand.index.bone_1.center.x,\
 right_hand.index.bone_1.center.y,right_hand.index.bone_1.center.z,right_hand.index.bone_1.next_joint.x,\
@@ -53,10 +53,13 @@ right_hand.thumb.bone_2.prev_joint.z,right_hand.thumb.stabilized_tip_position.x,
 right_hand.thumb.stabilized_tip_position.y,right_hand.thumb.stabilized_tip_position.z,\
 right_hand.thumb.width,right_hand.thumb.length,right_hand.thumb.tip_position.x,\
 right_hand.thumb.tip_position.y,right_hand.thumb.tip_position.z,right_hand.thumb.tip_velocity.x,\
-right_hand.thumb.tip_velocity.y,right_hand.thumb.tip_velocity.z,right_hand.stabilized_palm_position.x,\
-right_hand.stabilized_palm_position.y,right_hand.stabilized_palm_position.z,right_hand.sphere_radius,\
+right_hand.thumb.tip_velocity.y,right_hand.thumb.tip_velocity.z,right_hand.sphere_radius,\
 right_hand.palm_position.x,right_hand.palm_position.y,right_hand.palm_position.z,right_hand.direction.x,\
-right_hand.direction.y,right_hand.direction.z,right_hand.pinky.direction.x,\
+right_hand.direction.y,right_hand.direction.z,right_hand.stabilized_palm_position.x,\
+right_hand.stabilized_palm_position.y,right_hand.stabilized_palm_position.z,right_hand.arm.direction.x,\
+right_hand.arm.direction.y,right_hand.arm.direction.z,right_hand.arm.wrist_position.x,\
+right_hand.arm.wrist_position.y,right_hand.arm.wrist_position.z,right_hand.arm.elbow_position.x,\
+right_hand.arm.elbow_position.y,right_hand.arm.elbow_position.z,right_hand.pinky.direction.x,\
 right_hand.pinky.direction.y,right_hand.pinky.direction.z,right_hand.pinky.bone_1.direction.x,\
 right_hand.pinky.bone_1.direction.y,right_hand.pinky.bone_1.direction.z,right_hand.pinky.bone_1.center.x,\
 right_hand.pinky.bone_1.center.y,right_hand.pinky.bone_1.center.z,right_hand.pinky.bone_1.next_joint.x,\
@@ -106,9 +109,10 @@ right_hand.middle.bone_2.prev_joint.z,right_hand.middle.stabilized_tip_position.
 right_hand.middle.stabilized_tip_position.y,right_hand.middle.stabilized_tip_position.z,\
 right_hand.middle.width,right_hand.middle.length,right_hand.middle.tip_position.x,\
 right_hand.middle.tip_position.y,right_hand.middle.tip_position.z,right_hand.middle.tip_velocity.x,\
-right_hand.middle.tip_velocity.y,right_hand.middle.tip_velocity.z,right_hand.palm_velocity.x,\
-right_hand.palm_velocity.y,right_hand.palm_velocity.z,right_hand.palm_normal.x,\
-right_hand.palm_normal.y,right_hand.palm_normal.z,right_hand.palm_width,right_hand.ring.direction.x,\
+right_hand.middle.tip_velocity.y,right_hand.middle.tip_velocity.z,right_hand.grab_strength,right_hand.palm_normal.x,\
+right_hand.palm_normal.y,right_hand.palm_normal.z,right_hand.palm_width,right_hand.palm_velocity.x,\
+right_hand.palm_velocity.y,right_hand.palm_velocity.z,right_hand.sphere_center.x,\
+right_hand.sphere_center.y,right_hand.sphere_center.z,right_hand.ring.direction.x,\
 right_hand.ring.direction.y,right_hand.ring.direction.z,right_hand.ring.bone_1.direction.x,\
 right_hand.ring.bone_1.direction.y,right_hand.ring.bone_1.direction.z,right_hand.ring.bone_1.center.x,\
 right_hand.ring.bone_1.center.y,right_hand.ring.bone_1.center.z,right_hand.ring.bone_1.next_joint.x,\
@@ -133,11 +137,7 @@ right_hand.ring.bone_2.prev_joint.z,right_hand.ring.stabilized_tip_position.x,\
 right_hand.ring.stabilized_tip_position.y,right_hand.ring.stabilized_tip_position.z,\
 right_hand.ring.width,right_hand.ring.length,right_hand.ring.tip_position.x,\
 right_hand.ring.tip_position.y,right_hand.ring.tip_position.z,right_hand.ring.tip_velocity.x,\
-right_hand.ring.tip_velocity.y,right_hand.ring.tip_velocity.z,right_hand.sphere_center.x,\
-right_hand.sphere_center.y,right_hand.sphere_center.z,right_hand.arm.direction.x,\
-right_hand.arm.direction.y,right_hand.arm.direction.z,right_hand.arm.wrist_position.x,\
-right_hand.arm.wrist_position.y,right_hand.arm.wrist_position.z,right_hand.arm.elbow_position.x,\
-right_hand.arm.elbow_position.y,right_hand.arm.elbow_position.z,utc,name,gesture\n"
+right_hand.ring.tip_velocity.y,right_hand.ring.tip_velocity.z,utc,name,gesture\n"
 
 	try:
 		f = open(argv[0], 'r')
