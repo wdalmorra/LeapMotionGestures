@@ -8,7 +8,7 @@ def do_stuff(aux, k, ignore):
 				aux[k][key] = do_stuff(aux[k], key, ignore)
 
 	elif type(aux[k]) is list:
-		if k == 'direction':
+		if k == 'direction' or k == 'palm_normal':
 			for i in range(3):
 				aux[k][i] = round(aux[k][i], 1)
 
