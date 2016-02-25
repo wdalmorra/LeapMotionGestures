@@ -78,25 +78,28 @@ def save_data(params):
 			else:
 				which_hand = 'left_hand'
 
+			hand_palm_position = hand.palm_position
+
 			d[which_hand] = {}
 
+
 			d[which_hand]['confidence'] = hand.confidence
-			d[which_hand]['direction'] = hand.direction.to_tuple()
+			d[which_hand]['direction'] = (hand.direction-hand_palm_position).to_tuple()
 			d[which_hand]['grab_strength'] = hand.grab_strength
-			d[which_hand]['palm_normal'] = hand.palm_normal.to_tuple()
-			d[which_hand]['palm_position'] = hand.palm_position.to_tuple()
+			d[which_hand]['palm_normal'] = (hand.palm_normal-hand_palm_position).to_tuple()
+			d[which_hand]['palm_position'] = (hand.palm_position-hand_palm_position).to_tuple()
 			d[which_hand]['palm_velocity'] = hand.palm_velocity.to_tuple()
 			d[which_hand]['palm_width'] = hand.palm_width
-			d[which_hand]['sphere_center'] = hand.sphere_center.to_tuple()
+			d[which_hand]['sphere_center'] = (hand.sphere_center-hand_palm_position).to_tuple()
 			d[which_hand]['sphere_radius'] = hand.sphere_radius
-			d[which_hand]['stabilized_palm_position'] = hand.stabilized_palm_position.to_tuple()
+			d[which_hand]['stabilized_palm_position'] = (hand.stabilized_palm_position-hand_palm_position).to_tuple()
 
 			arm = hand.arm
 			d[which_hand]['arm'] = {}
 
 			d[which_hand]['arm']['direction'] = arm.direction.to_tuple()
-			d[which_hand]['arm']['elbow_position'] = arm.elbow_position.to_tuple()
-			d[which_hand]['arm']['wrist_position'] = arm.wrist_position.to_tuple()
+			d[which_hand]['arm']['elbow_position'] = (arm.elbow_position-hand_palm_position).to_tuple()
+			d[which_hand]['arm']['wrist_position'] = (arm.wrist_position-hand_palm_position).to_tuple()
 
 			fingers = hand.fingers
 
@@ -118,8 +121,8 @@ def save_data(params):
 
 				d[which_hand][which_finger]['direction'] = finger.direction.to_tuple()
 				d[which_hand][which_finger]['length'] = finger.length
-				d[which_hand][which_finger]['stabilized_tip_position'] = finger.stabilized_tip_position.to_tuple()
-				d[which_hand][which_finger]['tip_position'] = finger.tip_position.to_tuple()
+				d[which_hand][which_finger]['stabilized_tip_position'] = (finger.stabilized_tip_position-hand_palm_position).to_tuple()
+				d[which_hand][which_finger]['tip_position'] = (finger.tip_position-hand_palm_position).to_tuple()
 				d[which_hand][which_finger]['tip_velocity'] = finger.tip_velocity.to_tuple()
 				d[which_hand][which_finger]['width'] = finger.width
 
@@ -128,12 +131,12 @@ def save_data(params):
 
 					d[which_hand][which_finger][bone] = {}
 
-					d[which_hand][which_finger][bone]['center'] = finger.bone(i).center.to_tuple()
+					d[which_hand][which_finger][bone]['center'] = (finger.bone(i).center-hand_palm_position).to_tuple()
 					d[which_hand][which_finger][bone]['direction'] = finger.bone(i).direction.to_tuple()
 					d[which_hand][which_finger][bone]['length'] = finger.bone(i).length
 					d[which_hand][which_finger][bone]['width'] = finger.bone(i).width
-					d[which_hand][which_finger][bone]['next_joint'] = finger.bone(i).next_joint.to_tuple()
-					d[which_hand][which_finger][bone]['prev_joint'] = finger.bone(i).prev_joint.to_tuple()
+					d[which_hand][which_finger][bone]['next_joint'] = (finger.bone(i).next_joint-hand_palm_position).to_tuple()
+					d[which_hand][which_finger][bone]['prev_joint'] = (finger.bone(i).prev_joint-hand_palm_position).to_tuple()
 
 		else:
 			print 'Not a valid hand'
