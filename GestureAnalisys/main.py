@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import sys
+from sklearn import svm
 
 
 clf = svm.SVC(kernel = 'linear', C = 1.0)
@@ -7,20 +8,20 @@ clf = svm.SVC(kernel = 'linear', C = 1.0)
 samples = []
 classification = []
 
-training_percent = 0.5
-test_percent = 0.5
-
-collection = None
+training_percent = 0.9
 
 def connect_to_mongo(db_name,col_name):
 	try:
 		client = MongoClient()
 		db = client[db_name]
 		collection = db[col_name]
+		return collection
 	except Exception, e:
 		pass
 
-def learning():
+	return None
+
+def learning(collection):
 
 	n_elements = collection.count()
 
@@ -28,7 +29,7 @@ def learning():
 
 	fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
 
-	for i in range(n_elements*training_percent):
+	for i in range(int(n_elements*training_percent)):
 		tmp = []
 		for finger in fingers:
 			for j in range(3):
@@ -42,7 +43,7 @@ def learning():
 
 	clf.fit(samples,classification)
 
-def predict():
+def predict(collection):
 
 	n_elements = collection.count()
 
@@ -54,7 +55,7 @@ def predict():
 	right_answers = []
 	answers = []
 
-	for i in range(((n_elements*training_percent)+1),n_elements):
+	for i in range(int((n_elements*training_percent)+1),n_elements):
 		tmp = []
 		for finger in fingers:
 			for j in range(3):
@@ -67,13 +68,13 @@ def predict():
 		right_answers.append(gestures[i]['gesture'])
 
 	answers = clf.predict(tests)
-	print "Answers:   " + answers
-	print "Should be: "	+ right_answers
+	for i in range(len(answers)):
+		print "Answers:   " + str(answers[i]) + '    ' + "Should be: "	+ str(right_answers[i])
 
 	acc = 0
 	for i in range(len(answers)):
 		if answers[i] == right_answers [i]:
-			acc = acc + 1
+			acc = acc + 1.0
 
 	print "Percentage of hits: " + str(acc / len(answers))
 
@@ -81,11 +82,11 @@ def predict():
 
 def main(argv):
 
-	connect_to_mongo(argv[0],argv[1])
+	collection = connect_to_mongo(argv[0],argv[1])
 
-	learning()
+	learning(collection)
 
-	predict()
+	predict(collection)
 
 	pass
 
