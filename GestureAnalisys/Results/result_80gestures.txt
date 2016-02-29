@@ -1,0 +1,443 @@
+Training set: 50%
+Testing set: 50%
+SVM_kernel: linear
+Answer: 6    Should be: 0
+Answer: 2    Should be: 2
+Answer: 4    Should be: 3
+Answer: 4    Should be: 4
+Answer: 5    Should be: 5
+Answer: 1    Should be: 1
+Answer: 1    Should be: 7
+Answer: 8    Should be: 8
+Answer: 9    Should be: 9
+Answer: 7    Should be: 0
+Answer: 6    Should be: 6
+Answer: 2    Should be: 2
+Answer: 4    Should be: 4
+Answer: 5    Should be: 5
+Answer: 1    Should be: 1
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 3    Should be: 4
+Answer: 0    Should be: 5
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 6    Should be: 6
+Answer: 9    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.825
+
+Training set: 60%
+Testing set: 40%
+SVM_kernel: linear
+Answer: 9    Should be: 9
+Answer: 7    Should be: 0
+Answer: 6    Should be: 6
+Answer: 2    Should be: 2
+Answer: 4    Should be: 4
+Answer: 5    Should be: 5
+Answer: 1    Should be: 1
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 3    Should be: 4
+Answer: 0    Should be: 5
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 6    Should be: 6
+Answer: 9    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.875
+
+Training set: 70%
+Testing set: 30%
+SVM_kernel: linear
+Answer: 9    Should be: 7
+Answer: 8    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 3    Should be: 4
+Answer: 0    Should be: 5
+Answer: 7    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 6
+Answer: 9    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.791666666667
+
+Training set: 50%
+Testing set: 50%
+SVM_kernel: polynomial
+Answer: 0    Should be: 0
+Answer: 2    Should be: 2
+Answer: 4    Should be: 3
+Answer: 4    Should be: 4
+Answer: 5    Should be: 5
+Answer: 1    Should be: 1
+Answer: 1    Should be: 7
+Answer: 8    Should be: 8
+Answer: 7    Should be: 9
+Answer: 0    Should be: 0
+Answer: 6    Should be: 6
+Answer: 2    Should be: 2
+Answer: 4    Should be: 4
+Answer: 5    Should be: 5
+Answer: 1    Should be: 1
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 3    Should be: 4
+Answer: 0    Should be: 5
+Answer: 7    Should be: 7
+Answer: 6    Should be: 8
+Answer: 8    Should be: 6
+Answer: 7    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.775
+
+Training set: 60%
+Testing set: 40%
+SVM_kernel: polynomial
+Answer: 7    Should be: 9
+Answer: 0    Should be: 0
+Answer: 6    Should be: 6
+Answer: 2    Should be: 2
+Answer: 4    Should be: 4
+Answer: 5    Should be: 5
+Answer: 1    Should be: 1
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 7    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 3    Should be: 4
+Answer: 0    Should be: 5
+Answer: 7    Should be: 7
+Answer: 6    Should be: 8
+Answer: 8    Should be: 6
+Answer: 1    Should be: 9
+Answer: 3    Should be: 4
+Percentage of hits: 0.71875
+
+Training set: 70%
+Testing set: 30%
+SVM_kernel: polynomial
+Answer: 9    Should be: 7
+Answer: 8    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 7    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 2    Should be: 2
+Answer: 3    Should be: 3
+Answer: 9    Should be: 9
+Answer: 3    Should be: 4
+Answer: 0    Should be: 5
+Answer: 7    Should be: 7
+Answer: 6    Should be: 8
+Answer: 8    Should be: 6
+Answer: 1    Should be: 9
+Answer: 3    Should be: 4
+Percentage of hits: 0.625
+
+Training set: 50%
+Testing set: 50%
+SVM_kernel: rbf
+Answer: 0    Should be: 0
+Answer: 2    Should be: 2
+Answer: 4    Should be: 3
+Answer: 4    Should be: 4
+Answer: 6    Should be: 5
+Answer: 1    Should be: 1
+Answer: 6    Should be: 7
+Answer: 8    Should be: 8
+Answer: 6    Should be: 9
+Answer: 6    Should be: 0
+Answer: 6    Should be: 6
+Answer: 6    Should be: 2
+Answer: 4    Should be: 4
+Answer: 6    Should be: 5
+Answer: 1    Should be: 1
+Answer: 6    Should be: 6
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 4    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 6    Should be: 2
+Answer: 4    Should be: 3
+Answer: 6    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 7    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 0
+Answer: 1    Should be: 1
+Answer: 6    Should be: 2
+Answer: 4    Should be: 3
+Answer: 6    Should be: 9
+Answer: 6    Should be: 4
+Answer: 6    Should be: 5
+Answer: 7    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 6
+Answer: 6    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.45
+
+Training set: 60%
+Testing set: 40%
+SVM_kernel: rbf
+Answer: 3    Should be: 9
+Answer: 3    Should be: 0
+Answer: 3    Should be: 6
+Answer: 3    Should be: 2
+Answer: 3    Should be: 4
+Answer: 3    Should be: 5
+Answer: 3    Should be: 1
+Answer: 3    Should be: 6
+Answer: 3    Should be: 7
+Answer: 3    Should be: 8
+Answer: 3    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 3    Should be: 2
+Answer: 3    Should be: 3
+Answer: 3    Should be: 9
+Answer: 5    Should be: 5
+Answer: 3    Should be: 6
+Answer: 7    Should be: 7
+Answer: 8    Should be: 8
+Answer: 3    Should be: 0
+Answer: 1    Should be: 1
+Answer: 3    Should be: 2
+Answer: 3    Should be: 3
+Answer: 3    Should be: 9
+Answer: 3    Should be: 4
+Answer: 3    Should be: 5
+Answer: 7    Should be: 7
+Answer: 3    Should be: 8
+Answer: 3    Should be: 6
+Answer: 3    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.34375
+
+Training set: 70%
+Testing set: 30%
+SVM_kernel: rbf
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 3
+Answer: 0    Should be: 0
+Answer: 1    Should be: 1
+Answer: 6    Should be: 2
+Answer: 6    Should be: 3
+Answer: 6    Should be: 9
+Answer: 5    Should be: 5
+Answer: 6    Should be: 6
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 0
+Answer: 1    Should be: 1
+Answer: 6    Should be: 2
+Answer: 6    Should be: 3
+Answer: 6    Should be: 9
+Answer: 6    Should be: 4
+Answer: 6    Should be: 5
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 6
+Answer: 6    Should be: 9
+Answer: 4    Should be: 4
+Percentage of hits: 0.291666666667
+
+Training set: 50%
+Testing set: 50%
+SVM_kernel: sigmoid
+Answer: 9    Should be: 0
+Answer: 9    Should be: 2
+Answer: 9    Should be: 3
+Answer: 9    Should be: 4
+Answer: 9    Should be: 5
+Answer: 9    Should be: 1
+Answer: 9    Should be: 7
+Answer: 9    Should be: 8
+Answer: 9    Should be: 9
+Answer: 9    Should be: 0
+Answer: 9    Should be: 6
+Answer: 9    Should be: 2
+Answer: 9    Should be: 4
+Answer: 9    Should be: 5
+Answer: 9    Should be: 1
+Answer: 9    Should be: 6
+Answer: 9    Should be: 7
+Answer: 9    Should be: 8
+Answer: 9    Should be: 3
+Answer: 9    Should be: 0
+Answer: 9    Should be: 1
+Answer: 9    Should be: 2
+Answer: 9    Should be: 3
+Answer: 9    Should be: 9
+Answer: 9    Should be: 5
+Answer: 9    Should be: 6
+Answer: 9    Should be: 7
+Answer: 9    Should be: 8
+Answer: 9    Should be: 0
+Answer: 9    Should be: 1
+Answer: 9    Should be: 2
+Answer: 9    Should be: 3
+Answer: 9    Should be: 9
+Answer: 9    Should be: 4
+Answer: 9    Should be: 5
+Answer: 9    Should be: 7
+Answer: 9    Should be: 8
+Answer: 9    Should be: 6
+Answer: 9    Should be: 9
+Answer: 9    Should be: 4
+Percentage of hits: 0.1
+
+Training set: 60%
+Testing set: 40%
+SVM_kernel: sigmoid
+Answer: 8    Should be: 9
+Answer: 8    Should be: 0
+Answer: 8    Should be: 6
+Answer: 8    Should be: 2
+Answer: 8    Should be: 4
+Answer: 8    Should be: 5
+Answer: 8    Should be: 1
+Answer: 8    Should be: 6
+Answer: 8    Should be: 7
+Answer: 8    Should be: 8
+Answer: 8    Should be: 3
+Answer: 8    Should be: 0
+Answer: 8    Should be: 1
+Answer: 8    Should be: 2
+Answer: 8    Should be: 3
+Answer: 8    Should be: 9
+Answer: 8    Should be: 5
+Answer: 8    Should be: 6
+Answer: 8    Should be: 7
+Answer: 8    Should be: 8
+Answer: 8    Should be: 0
+Answer: 8    Should be: 1
+Answer: 8    Should be: 2
+Answer: 8    Should be: 3
+Answer: 8    Should be: 9
+Answer: 8    Should be: 4
+Answer: 8    Should be: 5
+Answer: 8    Should be: 7
+Answer: 8    Should be: 8
+Answer: 8    Should be: 6
+Answer: 8    Should be: 9
+Answer: 8    Should be: 4
+Percentage of hits: 0.09375
+
+Training set: 70%
+Testing set: 30%
+SVM_kernel: sigmoid
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 3
+Answer: 6    Should be: 0
+Answer: 6    Should be: 1
+Answer: 6    Should be: 2
+Answer: 6    Should be: 3
+Answer: 6    Should be: 9
+Answer: 6    Should be: 5
+Answer: 6    Should be: 6
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 0
+Answer: 6    Should be: 1
+Answer: 6    Should be: 2
+Answer: 6    Should be: 3
+Answer: 6    Should be: 9
+Answer: 6    Should be: 4
+Answer: 6    Should be: 5
+Answer: 6    Should be: 7
+Answer: 6    Should be: 8
+Answer: 6    Should be: 6
+Answer: 6    Should be: 9
+Answer: 6    Should be: 4
+Percentage of hits: 0.0833333333333
