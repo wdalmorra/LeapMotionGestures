@@ -1,6 +1,7 @@
-from pymongo import MongoClient
 import sys
+from pymongo import MongoClient
 from sklearn import svm
+from sklearn.externals import joblib
 
 
 clf = svm.SVC(kernel = 'linear', C = 1.0)
@@ -8,7 +9,7 @@ clf = svm.SVC(kernel = 'linear', C = 1.0)
 samples = []
 classification = []
 
-training_percent = 0.9
+training_percent = 0.5
 
 def connect_to_mongo(db_name,col_name):
 	try:
@@ -43,6 +44,8 @@ def learning(collection):
 
 	clf.fit(samples,classification)
 
+	joblib.dump(clf, 'training1.pkl', compress=1)
+
 def predict(collection):
 
 	n_elements = collection.count()
@@ -55,7 +58,7 @@ def predict(collection):
 	right_answers = []
 	answers = []
 
-	for i in range(int((n_elements*training_percent)+1),n_elements):
+	for i in range(int((n_elements*training_percent)),n_elements):
 		tmp = []
 		for finger in fingers:
 			for j in range(3):
@@ -69,7 +72,7 @@ def predict(collection):
 
 	answers = clf.predict(tests)
 	for i in range(len(answers)):
-		print "Answers:   " + str(answers[i]) + '    ' + "Should be: "	+ str(right_answers[i])
+		print "Answer: " + str(answers[i]) + '    ' + "Should be: "	+ str(right_answers[i])
 
 	acc = 0
 	for i in range(len(answers)):
@@ -77,7 +80,7 @@ def predict(collection):
 			acc = acc + 1.0
 
 	print "Percentage of hits: " + str(acc / len(answers))
-
+	print len(answers)
 
 
 def main(argv):
