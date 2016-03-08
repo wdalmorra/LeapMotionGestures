@@ -50,7 +50,7 @@ class Classifier(object):
 
 		fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
 
-		for i in range(int(n_elements*training_percent)):
+		for i in range(int(n_elements*self.training_percent)):
 			tmp = []
 			# classification = []
 			for finger in fingers:
@@ -64,12 +64,14 @@ class Classifier(object):
 			# classification.append(gestures[i]['gesture'])
 			# self.clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
 
-			samples.append(tmp)
-			classification.append(gestures[i]['gesture'])
+			self.samples.append(tmp)
+			self.classification.append(gestures[i]['gesture'])
 
-		self.clf.fit(samples,classification)
+		self.clf.fit(self.samples,self.classification)
 
 		joblib.dump(self.clf, self.filename, compress=1)
+
+		print 'finished training'
 
 	def guessing(self):
 
@@ -97,12 +99,18 @@ class Classifier(object):
 							tmp.append(vec_translated[j])
 					
 					answer = self.clf.predict(tmp)
-					print answer[0]
+					if answer[0] != last_gesture:
+						print answer[0]
+						last_gesture = answer[0]
+
+				else:
+					last_gesture = ""
+						
 
 def main(argv):
 
 
-	if len(argv) > 3:
+	if len(argv) >= 3:
 		c = Classifier(argv[0],argv[1])
 		c.training()
 		c.guessing()
