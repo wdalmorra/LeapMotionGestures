@@ -1,65 +1,111 @@
-import sys
+import sys, os
 from pymongo import MongoClient
 from sklearn import svm
 # from sklearn.linear_model import SGDClassifier
 from sklearn.externals import joblib
 
+src_dir = os.environ['LEAP_HOME']
+lib_dir = 'lib/'
+join_dir = os.path.join(src_dir, lib_dir)
+sys.path.append(join_dir)
+arch_dir = 'x64/' if sys.maxsize > 2**32 else 'x86/'
+join_dir = os.path.join(join_dir, arch_dir)
+sys.path.append(join_dir)
 
-# clf = SGDClassifier()
-clf = svm.SVC( kernel = 'linear', C = 1.0 )
+import Leap
 
-samples = []
-classification = []
+class Classifier(object):
+	
+	# clf = SGDClassifier()
+	clf = svm.SVC( kernel = 'linear', C = 1.0 )
 
-training_percent = 0.6
+	samples = []
+	classification = []
+	collection = None
+	training_percent = 0.6
+	db_name = ""
+	col_name = ""
+	filename = "training1.pkl"
+	
+	def __init__(self, db_name, col_name):
+		self.db_name = db_name
+		self.col_name = col_name
 
-def connect_to_mongo(db_name,col_name):
-	try:
-		client = MongoClient()
-		db = client[db_name]
-		collection = db[col_name]
-		return collection
-	except Exception, e:
-		pass
 
-	return None
+	def __connect_to_mongo(self):
+		try:
+			client = MongoClient()
+			db = client[self.db_name]
+			self.collection = db[self.col_name]
+		except Exception, e:
+			pass
 
-def learning(collection, filename):
+	def training(self):
 
-	n_elements = collection.count()
+		self.__connect_to_mongo()
 
-	gestures = collection.find()
+		n_elements = self.collection.count()
 
-	fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
+		gestures = self.collection.find()
 
-	for i in range(int(n_elements*training_percent)):
-		tmp = []
-		# classification = []
-		for finger in fingers:
-			for j in range(3):
-				tmp.append(gestures[i]['right_hand'][finger]['direction'][j])
-			for j in range(3):
-				tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
-			for j in range(3):
-				tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
+		fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
 
-		# classification.append(gestures[i]['gesture'])
-		# clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
+		for i in range(int(n_elements*training_percent)):
+			tmp = []
+			# classification = []
+			for finger in fingers:
+				for j in range(3):
+					tmp.append(gestures[i]['right_hand'][finger]['direction'][j])
+				for j in range(3):
+					tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
+				for j in range(3):
+					tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
 
-		samples.append(tmp)
-		classification.append(gestures[i]['gesture'])
+			# classification.append(gestures[i]['gesture'])
+			# self.clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
 
-	clf.fit(samples,classification)
+			samples.append(tmp)
+			classification.append(gestures[i]['gesture'])
 
-	joblib.dump(clf, filename, compress=1)
+		self.clf.fit(samples,classification)
+
+		joblib.dump(self.clf, self.filename, compress=1)
+
+	def guessing(self):
+
+		controller = Leap.Controller()
+		last_gesture = ""
+		while True:
+			frame = controller.frame()
+			if (frame.id % 100) == 0:
+				if not frame.hands.is_empty:
+					
+					hand_palm_position = frame.hands[0].palm_position
+
+					tmp = []
+
+					for i in range(5):
+						for j in range(3):
+							tmp.append(frame.hands[0].fingers[i].direction[j])
+
+						vec_translated = frame.hands[0].fingers[i].bone(2).prev_joint - hand_palm_position
+						for j in range(3):
+							tmp.append(vec_translated[j])
+
+						vec_translated = frame.hands[0].fingers[i].bone(2).next_joint - hand_palm_position
+						for j in range(3):
+							tmp.append(vec_translated[j])
+					
+					answer = self.clf.predict(tmp)
+					print answer[0]
 
 def main(argv):
 
+
 	if len(argv) > 3:
-		collection = connect_to_mongo(argv[0],argv[1])
-
-		learning(collection, argv[2])
-
+		c = Classifier(argv[0],argv[1])
+		c.training()
+		c.guessing()
 	else:
 		print '\nusage: python2 training.py <db_name> <collection_name> <file_name>\n'
 
