@@ -17,7 +17,7 @@ import Leap
 class Classifier(object):
 	
 	# clf = SGDClassifier()
-	clf = svm.SVC( kernel = 'linear', C = 1.0 )
+	clf = svm.SVC( kernel = 'linear', C = 1.0, probability = True )
 
 	samples = []
 	classification = []
@@ -73,6 +73,7 @@ class Classifier(object):
 
 		print 'finished training'
 
+
 	def guessing(self):
 
 		controller = Leap.Controller()
@@ -101,6 +102,7 @@ class Classifier(object):
 					answer = self.clf.predict(tmp)
 					if answer[0] != last_gesture:
 						print answer[0]
+						print clf.predict_proba(tmp)
 						last_gesture = answer[0]
 
 				else:
@@ -110,12 +112,12 @@ class Classifier(object):
 def main(argv):
 
 
-	if len(argv) >= 3:
+	if len(argv) >= 2:
 		c = Classifier(argv[0],argv[1])
 		c.training()
 		c.guessing()
 	else:
-		print '\nusage: python2 training.py <db_name> <collection_name> <file_name>\n'
+		print '\nusage: python2 training.py <db_name> <collection_name>\n'
 
 
 if __name__ == '__main__':
