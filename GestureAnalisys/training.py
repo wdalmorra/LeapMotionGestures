@@ -42,37 +42,41 @@ class Classifier(object):
 
 	def training(self):
 
-		self.__connect_to_mongo()
+		try:
+			# If file exists then there is a model already trained
+			clf = joblib.load('training1.pkl')
+		except IOError, e:
+			# Otherwise, train it!
+			self.__connect_to_mongo()
 
-		n_elements = self.collection.count()
+			n_elements = self.collection.count()
 
-		gestures = self.collection.find()
+			gestures = self.collection.find()
 
-		fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
+			fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
 
-		for i in range(int(n_elements*self.training_percent)):
-			tmp = []
-			# classification = []
-			for finger in fingers:
-				for j in range(3):
-					tmp.append(gestures[i]['right_hand'][finger]['direction'][j])
-				for j in range(3):
-					tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
-				for j in range(3):
-					tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
+			for i in range(int(n_elements*self.training_percent)):
+				tmp = []
+				# classification = []
+				for finger in fingers:
+					for j in range(3):
+						tmp.append(gestures[i]['right_hand'][finger]['direction'][j])
+					for j in range(3):
+						tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
+					for j in range(3):
+						tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
 
-			# classification.append(gestures[i]['gesture'])
-			# self.clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
+				# classification.append(gestures[i]['gesture'])
+				# self.clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
 
-			self.samples.append(tmp)
-			self.classification.append(gestures[i]['gesture'])
+				self.samples.append(tmp)
+				self.classification.append(gestures[i]['gesture'])
 
-		self.clf.fit(self.samples,self.classification)
+			self.clf.fit(self.samples,self.classification)
 
-		joblib.dump(self.clf, self.filename, compress=1)
+			joblib.dump(self.clf, self.filename, compress=1)
 
-		print 'finished training'
-
+		print 'Finished training'
 
 	def guessing(self):
 
