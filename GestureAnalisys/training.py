@@ -42,7 +42,7 @@ class Classifier(object):
 
 		try:
 			# If file exists then there is a model already trained
-			self.clf = joblib.load('training1.pkl')
+			self.clf = joblib.load(self.filename)
 		except IOError, e:
 			# Otherwise, train it!
 			self.__connect_to_mongo()
@@ -105,9 +105,9 @@ class Classifier(object):
 					
 					answer = self.clf.predict(tmp)
 					if answer[0] != last_gesture:
-						self.gui.gesture_label(answer[0])
-						print self.clf.predict_proba(tmp)
-						last_gesture = answer[0]
+						if self.clf.predict_proba(tmp)[0][int(answer[0])] > 0.5:
+							self.gui.update_gesture_label(answer[0])
+							last_gesture = answer[0]
 
 				else:
 					last_gesture = ""
