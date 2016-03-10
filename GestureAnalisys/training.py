@@ -22,15 +22,13 @@ class Classifier(object):
 	samples = []
 	classification = []
 	collection = None
-	training_percent = 0.6
-	db_name = ""
-	col_name = ""
+	gui = None
+	db_name = "project"
+	col_name = "gestures"
 	filename = "training1.pkl"
 	
-	def __init__(self, db_name, col_name):
-		self.db_name = db_name
-		self.col_name = col_name
-
+	def __init__(self):
+		pass
 
 	def __connect_to_mongo(self):
 		try:
@@ -44,7 +42,7 @@ class Classifier(object):
 
 		try:
 			# If file exists then there is a model already trained
-			clf = joblib.load('training1.pkl')
+			self.clf = joblib.load('training1.pkl')
 		except IOError, e:
 			# Otherwise, train it!
 			self.__connect_to_mongo()
@@ -78,11 +76,13 @@ class Classifier(object):
 
 		print 'Finished training'
 
-	def guessing(self):
+	def guessing(self,thread):
 
 		controller = Leap.Controller()
 		last_gesture = ""
 		while True:
+			if(thread._stop.is_set()):
+				return 'exit'
 			frame = controller.frame()
 			if (frame.id % 100) == 0:
 				if not frame.hands.is_empty:
@@ -105,24 +105,12 @@ class Classifier(object):
 					
 					answer = self.clf.predict(tmp)
 					if answer[0] != last_gesture:
-						print answer[0]
-						print clf.predict_proba(tmp)
+						self.gui.gesture_label(answer[0])
+						print self.clf.predict_proba(tmp)
 						last_gesture = answer[0]
 
 				else:
 					last_gesture = ""
-						
 
-def main(argv):
-
-
-	if len(argv) >= 2:
-		c = Classifier(argv[0],argv[1])
-		c.training()
-		c.guessing()
-	else:
-		print '\nusage: python2 training.py <db_name> <collection_name>\n'
-
-
-if __name__ == '__main__':
-	main(sys.argv[1:])
+	def set_interface(self, gui):
+		self.gui = gui
