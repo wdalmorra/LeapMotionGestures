@@ -1,11 +1,12 @@
 import gui, sys, os
-from Tkinter import *
+from PyQt5.QtWidgets import *
 
 def main(argv):
 
-	root = Tk()
-	app = gui.MainWindow(root)
-	root.mainloop()
+    app = QApplication(sys.argv)
+    ex = gui.Example()
+    ex.show()
+    sys.exit(app.exec_())
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
