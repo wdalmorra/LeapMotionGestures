@@ -71,7 +71,7 @@ class Example(QWidget):
 		self.gesture_label.setText(gest)
 
 		self.last_guesses = self.last_guesses[1:]
-		self.last_guesses.append(gest)
+		self.last_guesses.append(gest)k
 
 		tmp = ''
 		for g in self.last_guesses:
