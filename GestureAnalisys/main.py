@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 def main(argv):
 
     app = QApplication(sys.argv)
-    ex = gui.Example()
+    ex = gui.Gui()
     ex.show()
     sys.exit(app.exec_())
 

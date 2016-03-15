@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, json
 from pymongo import MongoClient
 from sklearn import svm
 # from sklearn.linear_model import SGDClassifier
@@ -25,54 +25,46 @@ class Classifier(object):
 	gui = None
 	db_name = "project"
 	col_name = "gestures"
-	filename = "training1.pkl"
+	database_file = "gestures90.json"
+	trained_file = "training1.pkl"
 	
 	def __init__(self):
 		pass
-
-	def __connect_to_mongo(self):
-		try:
-			client = MongoClient()
-			db = client[self.db_name]
-			self.collection = db[self.col_name]
-		except Exception, e:
-			pass
 
 	def training(self):
 
 		try:
 			# If file exists then there is a model already trained
-			self.clf = joblib.load(self.filename)
+			self.clf = joblib.load(self.trained_file)
 		except IOError, e:
 			# Otherwise, train it!
-			self.__connect_to_mongo()
-
-			n_elements = self.collection.count()
-
-			gestures = self.collection.find()
-
+		
 			fingers = ['thumb', 'index', 'middle', 'ring', 'pinky']
+			data = []
+			with open(self.database_file) as json_file:
+				for line in json_file:
+					data.append(json.loads(line))
 
-			for i in range(int(n_elements*self.training_percent)):
+			for d in data:
 				tmp = []
 				# classification = []
 				for finger in fingers:
 					for j in range(3):
-						tmp.append(gestures[i]['right_hand'][finger]['direction'][j])
+						tmp.append(d['right_hand'][finger]['direction'][j])
 					for j in range(3):
-						tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
+						tmp.append(d['right_hand'][finger]['bone_2']['prev_joint'][j])
 					for j in range(3):
-						tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
+						tmp.append(d['right_hand'][finger]['bone_2']['next_joint'][j])
 
 				# classification.append(gestures[i]['gesture'])
 				# self.clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
 
 				self.samples.append(tmp)
-				self.classification.append(gestures[i]['gesture'])
+				self.classification.append(d['gesture'])
 
 			self.clf.fit(self.samples,self.classification)
 
-			joblib.dump(self.clf, self.filename, compress=1)
+			joblib.dump(self.clf, self.trained_file, compress=1)
 
 		print 'Finished training'
 

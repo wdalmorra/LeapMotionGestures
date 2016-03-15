@@ -5,9 +5,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
-class Example(QWidget):
+class Gui(QWidget):
 
-	last_guesses = ['1','2','3','4','5','6','7','8','9','10']
+	last_guesses = ['-','-','-','-','-','-','-','-','-','-']
 
 	def __init__(self, parent=None):
 		QWidget.__init__(self,parent)
@@ -22,7 +22,7 @@ class Example(QWidget):
 
 	def __initUI(self):
 
-		self.gesture_label = QLabel("3", self)
+		self.gesture_label = QLabel("-", self)
 		new_font = QFont("Times", 150, QFont.Bold)
 		self.gesture_label.setFont(new_font)
 
@@ -68,18 +68,19 @@ class Example(QWidget):
 
 	# Updates the message label with the correct message
 	def update_gesture_label(self, gest):
-		self.gesture_label.setText(gest)
-
 		self.last_guesses = self.last_guesses[1:]
-		self.last_guesses.append(gest)k
+		self.last_guesses.append(str(self.gesture_label.text()))
+
+		self.gesture_label.setText(gest)
 
 		tmp = ''
 		for g in self.last_guesses:
-			tmp = g + " " + tmp
+			# print type(g)
+			tmp = g + ' ' + tmp
 		
-		self.history_label = QLabel(tmp,self)
-		new_font = QFont("Times", 30, QFont.Bold)
-		self.gesture_label.setFont(new_font)
+		self.history_label.setText(tmp)
+		# new_font = QFont("Times", 30, QFont.Bold)
+		# self.history_label.setFont(new_font)
 
 
 
