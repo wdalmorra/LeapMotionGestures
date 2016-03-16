@@ -8,7 +8,7 @@ clf = svm.SVC(kernel = 'linear', C = 1.0)
 samples = []
 classification = []
 
-training_percent = 0.9
+training_percent = 0.6
 
 def connect_to_mongo(db_name,col_name):
 	try:
@@ -38,6 +38,10 @@ def learning(collection):
 				tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
 			for j in range(3):
 				tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
+		tmp.append(gestures[i]['right_hand']['sphere_radius'])
+		# tmp.append(gestures[i]['right_hand']['grab_strength'])
+		# for j in xrange(3):
+		# 	tmp.append(gestures[i]['right_hand']['palm_normal'][j])
 		samples.append(tmp)
 		classification.append(gestures[i]['gesture'])
 
@@ -64,6 +68,10 @@ def predict(collection):
 				tmp.append(gestures[i]['right_hand'][finger]['bone_2']['prev_joint'][j])
 			for j in range(3):
 				tmp.append(gestures[i]['right_hand'][finger]['bone_2']['next_joint'][j])
+		tmp.append(gestures[i]['right_hand']['sphere_radius'])
+		# tmp.append(gestures[i]['right_hand']['grab_strength'])
+		# for j in xrange(3):
+		# 	tmp.append(gestures[i]['right_hand']['palm_normal'][j])
 		tests.append(tmp)
 		right_answers.append(gestures[i]['gesture'])
 
