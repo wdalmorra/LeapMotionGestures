@@ -55,7 +55,7 @@ class Classifier(object):
 						tmp.append(d['right_hand'][finger]['bone_2']['prev_joint'][j])
 					for j in range(3):
 						tmp.append(d['right_hand'][finger]['bone_2']['next_joint'][j])
-
+				tmp.append(d['right_hand']['sphere_radius'])
 				# classification.append(gestures[i]['gesture'])
 				# self.clf.partial_fit(tmp, classification, classes=['0','1','2','3','4','5','6','7','8','9'])
 
@@ -78,7 +78,7 @@ class Classifier(object):
 			frame = controller.frame()
 			if (frame.id % 100) == 0:
 				if not frame.hands.is_empty:
-					
+
 					hand_palm_position = frame.hands[0].palm_position
 
 					tmp = []
