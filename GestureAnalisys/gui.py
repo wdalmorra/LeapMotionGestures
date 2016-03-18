@@ -1,6 +1,7 @@
 import training
 import call_guessing
 import sys, os
+import subprocess as sub
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -21,11 +22,15 @@ class Gui(QWidget):
 
 
 	def getPasswordFromUser(self):
-		password, ok = QInputDialog.getText(self, 'Start Leap Motion', 'User password:')
+		qid = QInputDialog()
+		password, ok = qid.getText(self, 'Start Leap Motion', 'User password:', echo=QLineEdit.Password)
 
 		if ok:
-			p = os.system('echo %s|sudo -S %s' % (str(password), 'sudo leapd'))
-
+			p = os.system('echo %s|sudo -S %s' % (str(password), 'sudo leapd &'))
+			# p = sub.Popen(['echo %s|sudo -S %s' % (str(password), 'sudo leapd &')],stdout=sub.PIPE,stderr=sub.PIPE)
+			# output, errors = p.communicate()
+			# print output
+				print p
 
 	def __initUI(self):
 
