@@ -1,6 +1,6 @@
 import training
 import call_guessing
-import sys
+import sys, os
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -20,11 +20,21 @@ class Gui(QWidget):
 		self.cg.start()
 
 
+	def getPasswordFromUser(self):
+		password, ok = QInputDialog.getText(self, 'Start Leap Motion', 'User password:')
+
+		if ok:
+			p = os.system('echo %s|sudo -S %s' % (str(password), 'sudo leapd'))
+
+
 	def __initUI(self):
 
 		self.gesture_label = QLabel("-", self)
 		new_font = QFont("Times", 150, QFont.Bold)
 		self.gesture_label.setFont(new_font)
+
+		self.startLeap = QPushButton("Start Leap Motion",self)
+		self.startLeap.clicked.connect(self.getPasswordFromUser)
 
 		tmp = ''
 		for g in self.last_guesses:
@@ -33,8 +43,6 @@ class Gui(QWidget):
 		self.history_label = QLabel(tmp,self)
 		new_font2 = QFont("Times", 20, QFont.Bold)
 		self.history_label.setFont(new_font2)
-
-
 
 		hbox = QHBoxLayout()
 		hbox.addStretch(1)
@@ -45,9 +53,14 @@ class Gui(QWidget):
 		hbox2.addStretch(1)
 		hbox2.addWidget(self.history_label)
 
+		hbox3 = QHBoxLayout()
+		hbox3.addStretch(1)
+		hbox3.addWidget(self.startLeap)
+
 		vbox = QVBoxLayout()
+		vbox.addLayout(hbox3)
 		vbox.addStretch(1)
-		vbox.addLayout(hbox)
+		vbox.addLayout(hbox)		
 		vbox.addStretch(1)
 		vbox.addLayout(hbox2)
 
@@ -75,14 +88,9 @@ class Gui(QWidget):
 
 		tmp = ''
 		for g in self.last_guesses:
-			# print type(g)
 			tmp = g + ' ' + tmp
-		
+
 		self.history_label.setText(tmp)
-		# new_font = QFont("Times", 30, QFont.Bold)
-		# self.history_label.setFont(new_font)
-
-
 
 
 
