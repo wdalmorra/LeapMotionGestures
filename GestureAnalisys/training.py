@@ -25,7 +25,7 @@ class Classifier(object):
 	gui = None
 	db_name = "project"
 	col_name = "gestures"
-	database_file = "gestures90.json"
+	database_file = "gestures100.json"
 	trained_file = "training1.pkl"
 	
 	def __init__(self):
@@ -94,7 +94,7 @@ class Classifier(object):
 						vec_translated = frame.hands[0].fingers[i].bone(2).next_joint - hand_palm_position
 						for j in range(3):
 							tmp.append(vec_translated[j])
-					
+					tmp.append(frame.hands[0].sphere_radius)
 					answer = self.clf.predict(tmp)
 					if answer[0] != last_gesture:
 						if self.clf.predict_proba(tmp)[0][int(answer[0])] > 0.5:

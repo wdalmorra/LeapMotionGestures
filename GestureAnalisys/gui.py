@@ -12,11 +12,13 @@ class Gui(QWidget):
 
 	def __init__(self, parent=None):
 		QWidget.__init__(self,parent)
-		self.__initUI()
 
 		self.clf = training.Classifier()
 		self.clf.set_interface(self)
 		self.clf.training()
+
+		self.__initUI()
+
 		self.cg = call_guessing.Call_Guessing(self.clf)
 		self.cg.start()
 
@@ -30,7 +32,12 @@ class Gui(QWidget):
 			# p = sub.Popen(['echo %s|sudo -S %s' % (str(password), 'sudo leapd &')],stdout=sub.PIPE,stderr=sub.PIPE)
 			# output, errors = p.communicate()
 			# print output
-				print p
+			print p
+
+	def retrain(self):
+		os.system("rm " + self.clf.trained_file)
+		self.clf.training()
+		self.trainSVM.setText("Retrain")
 
 	def __initUI(self):
 
@@ -40,6 +47,13 @@ class Gui(QWidget):
 
 		self.startLeap = QPushButton("Start Leap Motion",self)
 		self.startLeap.clicked.connect(self.getPasswordFromUser)
+
+		self.trainSVM = QPushButton(self)
+		if os.path.isfile(self.clf.trained_file):
+			self.trainSVM.setText("Retrain")
+		else:
+			self.trainSVM.setText("Train")
+		self.trainSVM.clicked.connect(self.retrain)
 
 		tmp = ''
 		for g in self.last_guesses:
@@ -59,6 +73,7 @@ class Gui(QWidget):
 		hbox2.addWidget(self.history_label)
 
 		hbox3 = QHBoxLayout()
+		hbox3.addWidget(self.trainSVM)
 		hbox3.addStretch(1)
 		hbox3.addWidget(self.startLeap)
 
