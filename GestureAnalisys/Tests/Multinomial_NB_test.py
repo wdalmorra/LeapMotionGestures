@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import sys
-from sklearn import svm
+from sklearn import naive_bayes
 from sklearn import preprocessing
 from sklearn.cross_validation import cross_val_score, KFold, train_test_split
 from sklearn import metrics
@@ -8,8 +8,7 @@ from scipy.stats import sem
 import numpy as np
 from random import randint
 
-# rbf 80% training = 95% hit
-clf = svm.SVC(kernel = 'linear', C = 1.0)
+clf =  naive_bayes.MultinomialNB()
 
 X_train = []
 y_train = []
