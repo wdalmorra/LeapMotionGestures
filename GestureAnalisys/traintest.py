@@ -3,13 +3,13 @@ import sys
 from sklearn import svm
 from sklearn import preprocessing
 
-
-clf = svm.SVC(kernel = 'rbf', C = 1.0)
+# rbf 80% training = 95% hit
+clf = svm.SVC(kernel = 'linear', C = 1.0)
 
 samples = []
 classification = []
 
-training_percent = 0.8
+training_percent = 0.6
 
 def connect_to_mongo(db_name,col_name):
 	try:
