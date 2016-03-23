@@ -1,14 +1,15 @@
 from pymongo import MongoClient
 import sys
 from sklearn import svm
+from sklearn import preprocessing
 
 
-clf = svm.SVC(kernel = 'linear', C = 1.0)
+clf = svm.SVC(kernel = 'rbf', C = 1.0)
 
 samples = []
 classification = []
 
-training_percent = 0.6
+training_percent = 0.8
 
 def connect_to_mongo(db_name,col_name):
 	try:
@@ -45,7 +46,10 @@ def learning(collection):
 		samples.append(tmp)
 		classification.append(gestures[i]['gesture'])
 
-	clf.fit(samples,classification)
+	normalized_samples = preprocessing.normalize(samples, norm='l2')
+	scaled_samples = preprocessing.scale(normalized_samples)
+
+	clf.fit(scaled_samples,classification)
 
 def predict(collection):
 
@@ -75,7 +79,10 @@ def predict(collection):
 		tests.append(tmp)
 		right_answers.append(gestures[i]['gesture'])
 
-	answers = clf.predict(tests)
+	normalized_tests = preprocessing.normalize(tests, norm='l2')
+	scaled_tests = preprocessing.scale(normalized_tests)
+
+	answers = clf.predict(scaled_tests)
 	for i in range(len(answers)):
 		print "Answers:   " + str(answers[i]) + '    ' + "Should be: "	+ str(right_answers[i])
 
