@@ -95,6 +95,16 @@ def predict():
 	print "Confusion Matrix:"
 	print metrics.confusion_matrix(y_test, y_pred)
 
+
+	acc = 0.0
+
+	for i in range(len(y_pred)):
+		if y_pred[i] == y_test[i]:
+			acc = acc + 1
+
+
+	print "Percentage of hits: " + str(acc / len(y_test))
+
 def main(argv):
 
 	collection = connect_to_mongo(argv[0],argv[1])

@@ -16,7 +16,8 @@ y_train = []
 X_test = []
 y_test = []
 
-magic_random_number = randint(0,255)
+magic_random_number = 25
+# magic_random_number = randint(0,255)
 
 # training_percent = 0.6
 
@@ -72,7 +73,7 @@ def generate_data_target(collection):
 	normalized_samples = preprocessing.normalize(samples, norm='l2')
 	scaled_samples = preprocessing.scale(normalized_samples)
 
-	X_train, X_test, y_train, y_test = train_test_split(scaled_samples, classification, test_size=0.40, random_state=magic_random_number)
+	X_train, X_test, y_train, y_test = train_test_split(scaled_samples, classification, test_size=0.30, random_state=magic_random_number)
 
 
 def learning():
@@ -95,6 +96,16 @@ def predict():
 	print metrics.classification_report(y_test, y_pred)
 	print "Confusion Matrix:"
 	print metrics.confusion_matrix(y_test, y_pred)
+
+
+	acc = 0.0
+
+	for i in range(len(y_pred)):
+		if y_pred[i] == y_test[i]:
+			acc = acc + 1
+
+
+	print "Percentage of hits: " + str(acc / len(y_test))
 
 def main(argv):
 
