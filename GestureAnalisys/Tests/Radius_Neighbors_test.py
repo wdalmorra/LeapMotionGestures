@@ -18,6 +18,8 @@ y_test = []
 
 magic_random_number = randint(0,255)
 
+DEBUG = False
+
 # training_percent = 0.6
 
 def connect_to_mongo(db_name,col_name):
@@ -37,7 +39,9 @@ def evaluate_cross_validation(clf, X, y, K):
 
 	# by default the score used is the one returned by score method of the estimator (accuracy)
 	scores = cross_val_score(clf, X, y, cv=cv)
-	print scores
+
+	if DEBUG:
+		print scores
 	print ("Mean score: {0:.3f} (+/-{1:.3f})").format(np.mean(scores), sem(scores))
 
 def generate_data_target(collection):
@@ -91,10 +95,11 @@ def predict():
 
 	y_pred = clf.predict(X_test)
 
-	print "Classification Report:"
-	print metrics.classification_report(y_test, y_pred)
-	print "Confusion Matrix:"
-	print metrics.confusion_matrix(y_test, y_pred)
+	if DEBUG:
+		print "Classification Report:"
+		print metrics.classification_report(y_test, y_pred)
+		print "Confusion Matrix:"
+		print metrics.confusion_matrix(y_test, y_pred)
 
 	acc = 0.0
 

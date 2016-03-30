@@ -1,0 +1,57 @@
+TEST SIZE: 40%
+SVM_test.py
+Mean score: 0.883 (+/-0.042)
+Accuracy on training set: 
+1.0
+Accuracy on testing set: 
+0.75
+Percentage of hits: 0.75
+
+Bernoulli_NB_test.py
+Mean score: 0.750 (+/-0.026)
+Accuracy on training set: 
+0.983333333333
+Accuracy on testing set: 
+0.75
+Percentage of hits: 0.75
+
+Decision_Tree_test.py
+Mean score: 0.533 (+/-0.057)
+Accuracy on training set: 
+1.0
+Accuracy on testing set: 
+0.675
+Percentage of hits: 0.675
+
+Gaussian_NB_test.py
+Mean score: 0.733 (+/-0.081)
+Accuracy on training set: 
+0.983333333333
+Accuracy on testing set: 
+0.725
+Percentage of hits: 0.725
+
+KNeighbors_test.py
+Mean score: 0.717 (+/-0.042)
+Accuracy on training set: 
+0.933333333333
+Accuracy on testing set: 
+0.75
+Percentage of hits: 0.75
+
+OneVsOne_test.py
+Mean score: 0.900 (+/-0.031)
+Accuracy on training set: 
+1.0
+Accuracy on testing set: 
+0.775
+Percentage of hits: 0.775
+
+OneVsRest_test.py
+Mean score: 0.900 (+/-0.041)
+Accuracy on training set: 
+1.0
+Accuracy on testing set: 
+0.85
+Percentage of hits: 0.85
+
