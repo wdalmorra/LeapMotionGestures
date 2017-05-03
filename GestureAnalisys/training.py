@@ -1,4 +1,5 @@
 import sys, os, json
+import numpy as np
 from pymongo import MongoClient
 from sklearn import svm
 # from sklearn.linear_model import SGDClassifier
@@ -78,6 +79,12 @@ class Classifier(object):
 			frame = controller.frame()
 			if (frame.id % 100) == 0:
 				if not frame.hands.is_empty:
+					velocity = frame.hands[0].palm_velocity
+
+					while((abs(velocity[0]) > 30.0) or (abs(velocity[1]) > 30.0) or (abs(velocity[2]) > 30.0) or (frame.hands.is_empty)):
+						velocity = frame.hands[0].palm_velocity
+						print velocity
+						frame = controller.frame()
 
 					hand_palm_position = frame.hands[0].palm_position
 
@@ -95,6 +102,8 @@ class Classifier(object):
 						for j in range(3):
 							tmp.append(vec_translated[j])
 					tmp.append(frame.hands[0].sphere_radius)
+					tmp = np.array(tmp)
+					tmp = tmp.reshape(1, -1)
 					answer = self.clf.predict(tmp)
 					if answer[0] != last_gesture:
 						if self.clf.predict_proba(tmp)[0][int(answer[0])] > 0.5:
